@@ -5,7 +5,7 @@ using UnityEngine;
 public class MagasinController : MonoBehaviour
 {
     private static MagasinController _instance;
-    public static MagasinController Insatance
+    public static MagasinController Instance
     {
         get
         {
@@ -35,8 +35,8 @@ public class MagasinController : MonoBehaviour
 
     public void SubMoney(float f)
     {
-        if (f <= 0)
-            money += f;
+        if (f >= 0)
+            money -= f;
     }
 
     public void AddIngredient(object o)
