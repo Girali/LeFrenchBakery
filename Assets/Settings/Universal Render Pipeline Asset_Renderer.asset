@@ -15,7 +15,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: RenderObjects
-    Event: 600
+    Event: 1000
     filterSettings:
       RenderQueueType: 1
       LayerMask:
@@ -24,8 +24,8 @@ MonoBehaviour:
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
-    overrideDepthState: 0
-    depthCompareFunction: 4
+    overrideDepthState: 1
+    depthCompareFunction: 7
     enableWrite: 1
     stencilSettings:
       overrideStencilState: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
     AfterOpaque: 0
     Source: 1
     NormalSamples: 1
-    Intensity: 3
+    Intensity: 0.5
     DirectLightingStrength: 0.25
-    Radius: 0.035
+    Radius: 0.23
     SampleCount: 4
