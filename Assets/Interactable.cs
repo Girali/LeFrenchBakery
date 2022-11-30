@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public void InteractFirst(bool space, bool spaceDown)
+    public virtual Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
-
+        return this;
     }
 
-    public void Interact(bool space, bool spaceDown)
+    public virtual void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
 
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recette : MonoBehaviour
+public class Trash : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

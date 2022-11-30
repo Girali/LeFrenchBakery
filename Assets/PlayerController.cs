@@ -14,8 +14,9 @@ public class PlayerController : MonoBehaviour
     private bool down;
     private bool left;
     private bool right;
-    private bool interact;
-    private bool interactDown;
+    private bool interactLeft;
+    private bool interactDownLeft;
+    private bool interactDownRight;
     private Vector3 mousePosition;
     private GameObject hitObject;
 
@@ -44,11 +45,13 @@ public class PlayerController : MonoBehaviour
         down = Input.GetKey(KeyCode.DownArrow);
         left = Input.GetKey(KeyCode.LeftArrow);
         right = Input.GetKey(KeyCode.RightArrow);
-        interact = Input.GetKey(KeyCode.Space);
-        interactDown = Input.GetKeyDown(KeyCode.Space);
+        right = Input.GetKey(KeyCode.RightArrow);
+        interactLeft = Input.GetMouseButton(0);
+        interactDownLeft = Input.GetMouseButtonDown(0);
+        interactDownRight = Input.GetMouseButtonDown(1);
 
         pm.Move(up, down, left, right, mousePosition);
-        pic.Interact(interact, interactDown, hitObject);
+        pic.Interact(interactLeft, interactDownLeft, interactDownRight, hitObject);
     }
 
 }

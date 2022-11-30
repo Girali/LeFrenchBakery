@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class DGUI_Controller : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class DGUI_Controller : MonoBehaviour
     }
 
     public GameObject interactIndicator;
+    public GameObject interactTimer;
 
     public void ShowInidicator(Transform pos, bool b)
     {
@@ -30,5 +32,16 @@ public class DGUI_Controller : MonoBehaviour
 
             interactIndicator.transform.position = p;
         }
+    }
+
+    public DUI_Timer StartTimer(Transform pos, float cookingTime, float overcookingTime)
+    {
+        Collider c = pos.GetComponent<Collider>();
+        Vector3 p = c.bounds.center + Vector3.up;
+        DUI_Timer t = Instantiate(interactTimer, transform).GetComponent<DUI_Timer>();
+        t.gameObject.SetActive(true);
+        t.transform.position = p;
+        t.StartTimer(cookingTime, overcookingTime);
+        return t;
     }
 }

@@ -8,59 +8,66 @@ public class PlayerInteractionController : MonoBehaviour
     private float minDistance;
     private Interactable currentInteractable;
     private bool interacting = false;
-    public void Interact(bool interact, bool interactDown, GameObject hit)
+    private Machine machineInUse;
+
+    public void Interact(bool interactLeft, bool interactDownLeft, bool interactDownRight, GameObject hit)
     {
-        if (hit != null)
+
+        if (interacting == false)
         {
-            Interactable i = hit.GetComponent<Interactable>();
-
-            if (i != null)// hit interactable
+            if (hit != null)
             {
-                Vector3 v = hit.transform.position - transform.position;
-                v.y = 0;
-                float dist = v.magnitude;
+                Interactable i = hit.GetComponent<Interactable>();
 
-                if (currentInteractable == null && dist < minDistance)// current is null and in range
+                if (i != null)// hit interactable
                 {
-                    currentInteractable = i;
-                    DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
-                }
-                else if (currentInteractable != i && dist < minDistance)// current is not current and in range
-                {
-                    currentInteractable = i;
-                    DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
-                }
-                else if (currentInteractable != i && dist > minDistance)// current is ok and out range
-                {
-                    currentInteractable = null;
-                    DGUI_Controller.Insatance.ShowInidicator(null, false);
-                }
-                else // current is ok and in range
-                {
-                    if (interact)
+                    Vector3 v = hit.transform.position - transform.position;
+                    v.y = 0;
+                    float dist = v.magnitude;
+
+                    if (currentInteractable == null && dist < minDistance)// current is null and in range
                     {
-                        currentInteractable.InteractFirst(interact, interactDown);
-                        interacting = true;
+                        currentInteractable = i;
+                        DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
+                    }
+                    else if (currentInteractable != i && dist < minDistance)// current is not current and in range
+                    {
+                        currentInteractable = i;
+                        DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
+                    }
+                    else if (currentInteractable != i && dist > minDistance)// current is ok and out range
+                    {
+                        currentInteractable = null;
+                        DGUI_Controller.Insatance.ShowInidicator(null, false);
+                    }
+                    else // current is ok and in range
+                    {
+                        if (interactDownLeft)
+                        {
+                            machineInUse = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight).GetComponent<Machine>();
+                            DGUI_Controller.Insatance.ShowInidicator(null, false);
+                            interacting = true;
+                        }
                     }
                 }
-            }
-            else// no hit
-            {
-                if (currentInteractable != null)//current is ok
+                else// no hit
                 {
-                    currentInteractable = null;
-                    DGUI_Controller.Insatance.ShowInidicator(null, false);
-                }
-                else// current is null
-                {
+                    if (currentInteractable != null)//current is ok
+                    {
+                        currentInteractable = null;
+                        DGUI_Controller.Insatance.ShowInidicator(null, false);
+                    }
+                    else// current is null
+                    {
 
+                    }
                 }
             }
         }
 
         if(interacting && currentInteractable != null)
         {
-            currentInteractable.Interact(interact, interactDown);
+            currentInteractable.Interact(interactLeft, interactDownLeft, interactDownRight);
         }
         
     }
