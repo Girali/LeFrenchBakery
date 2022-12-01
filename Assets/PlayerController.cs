@@ -23,6 +23,14 @@ public class PlayerController : MonoBehaviour
     private int layerMaskFloor;
     private int layerMaskInteractable;
 
+    private bool stopMove = false;
+
+    public void StartStopMove(bool start, Machine machine)
+    {
+        stopMove = !start;
+        pic.StartStopInteract(start, machine);
+    }
+
     void Start()
     {
         layerMaskFloor = LayerMask.GetMask("Floor");
@@ -35,17 +43,27 @@ public class PlayerController : MonoBehaviour
         Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, 20f, layerMaskFloor);
         mousePosition = hit.point;
 
-        Debug.DrawRay(transform.position + (Vector3.down * 0.5f), transform.forward, Color.red);
-
         Physics.Raycast(transform.position + (Vector3.down * 0.5f), transform.forward, out hit, 20f, layerMaskInteractable);
         if(hit.transform)
             hitObject = hit.transform.gameObject;
 
-        up = Input.GetKey(KeyCode.UpArrow);
-        down = Input.GetKey(KeyCode.DownArrow);
-        left = Input.GetKey(KeyCode.LeftArrow);
-        right = Input.GetKey(KeyCode.RightArrow);
-        right = Input.GetKey(KeyCode.RightArrow);
+        if (!stopMove)
+        {
+            up = Input.GetKey(KeyCode.UpArrow);
+            down = Input.GetKey(KeyCode.DownArrow);
+            left = Input.GetKey(KeyCode.LeftArrow);
+            right = Input.GetKey(KeyCode.RightArrow);
+        }
+        else
+        {
+            up = false;
+            down = false;
+            left = false;
+            right = false;
+            mousePosition = Vector3.zero;
+            hitObject = null;
+        }    
+
         interactLeft = Input.GetMouseButton(0);
         interactDownLeft = Input.GetMouseButtonDown(0);
         interactDownRight = Input.GetMouseButtonDown(1);

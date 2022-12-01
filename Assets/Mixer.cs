@@ -40,7 +40,6 @@ public class Mixer : Machine
         {
             //finish
             mixer.Show(false);
-            inUse = false;
         }
 
         mixer.UpdateView(miniGameProgress / miniGameGoal, isLeft);
@@ -50,7 +49,6 @@ public class Mixer : Machine
     {
         base.InteractFirst(leftClick, leftClickDown, rightClickDown);
         mixer.Show(true);
-        inUse = true;
         miniGameProgress = 0;
         return (Interactable)this;
     }

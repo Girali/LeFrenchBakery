@@ -15,11 +15,12 @@ public class RecipeController : MonoBehaviour
         recipeObjects = new List<RecipeObject>();
     }
 
-    public void StartReciepe(int i)
+    public RecipeObject StartReciepe(int i)
     {
         GameObject g = Instantiate(reciepPrefab);
         RecipeObject o = g.GetComponent<RecipeObject>();
         o.Init(recipes[i]);
         recipeObjects.Add(o);
+        return o;
     }
 }

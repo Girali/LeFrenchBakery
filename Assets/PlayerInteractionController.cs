@@ -10,6 +10,20 @@ public class PlayerInteractionController : MonoBehaviour
     private bool interacting = false;
     private Machine machineInUse;
 
+    public void StartStopInteract(bool start, Machine machine)
+    {
+        if (start)
+        {
+            interacting = false;
+            machineInUse = machine;
+        }
+        else
+        {
+            interacting = true;
+            machineInUse = null;
+        }
+    }
+
     public void Interact(bool interactLeft, bool interactDownLeft, bool interactDownRight, GameObject hit)
     {
 
@@ -46,7 +60,6 @@ public class PlayerInteractionController : MonoBehaviour
                         {
                             machineInUse = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight).GetComponent<Machine>();
                             DGUI_Controller.Insatance.ShowInidicator(null, false);
-                            interacting = true;
                         }
                     }
                 }
