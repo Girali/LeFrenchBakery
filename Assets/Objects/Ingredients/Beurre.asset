@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7993c19651553f4408fe4c4612fb37ba, type: 3}
-  m_Name: Eau
+  m_Name: Beurre
   m_EditorClassIdentifier: 
-  ingredient: 1
+  ingredient: 8
   prix: 5
-  peremption: 20
+  peremption: 5
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: 1523c281eb042a140887868e233f644e, type: 3}
-  description: Sans saveur.
+  sprite: {fileID: 21300000, guid: ff3f91541cdd0e84ca1be151a893ba57, type: 3}
+  description: 
