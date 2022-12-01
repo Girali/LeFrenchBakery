@@ -17,6 +17,18 @@ public class MagasinController : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private Jun_TweenRuntime blackFadeOut;
+    [SerializeField]
+    private CameraController cameraController;
+
+    private void Start()
+    {
+        blackFadeOut.Play();
+        cameraController.FromStartToKichen();
+    }
+
+
     private float money = 100;
 
     public float Money

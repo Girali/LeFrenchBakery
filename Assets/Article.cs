@@ -13,8 +13,10 @@ public class Article : ScriptableObject
     public Sprite sprite;
     [TextArea]
     public string description;
-    public Recette recette;
+    public Recipe recette;
     public Qualite qualite;
+    public GameObject prefab;
+
     public enum Qualite 
     {
         Mediocre,
