@@ -5,7 +5,7 @@ using UnityEngine;
 public class MagasinController : MonoBehaviour
 {
     private static MagasinController _instance;
-    public static MagasinController Insatance
+    public static MagasinController Instance
     {
         get
         {
@@ -16,6 +16,18 @@ public class MagasinController : MonoBehaviour
             return _instance;
         }
     }
+
+    [SerializeField]
+    private Jun_TweenRuntime blackFadeOut;
+    [SerializeField]
+    private CameraController cameraController;
+
+    private void Start()
+    {
+        blackFadeOut.Play();
+        cameraController.FromStartToKichen();
+    }
+
 
     private float money = 100;
 
@@ -35,8 +47,8 @@ public class MagasinController : MonoBehaviour
 
     public void SubMoney(float f)
     {
-        if (f <= 0)
-            money += f;
+        if (f >= 0)
+            money -= f;
     }
 
     public void AddIngredient(object o)

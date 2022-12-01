@@ -18,6 +18,7 @@ public class Ingredient : ScriptableObject
         Beurre,
         Sucre,
         Chocolat,
+        None
     }
     public NomIngredient ingredient;
     public float prix;
