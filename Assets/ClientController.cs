@@ -32,6 +32,21 @@ public class ClientController : MonoBehaviour
 
         c.Init(enters[ietr].Copy(), exits[iext].Copy(), a);
     }
+
+    public void ClientEnters(Client c)
+    {
+
+    }
+
+    public void ClientSuccess(Client c)
+    {
+
+    }
+
+    public void ClientFailed(Client c)
+    {
+
+    }
 }
 
 [System.Serializable]
@@ -80,19 +95,23 @@ public class ClientPath
             float rest = totalDistance - currentSegment - doneDistance;
             float currentDistance = t * totalDistance;
             doneDistance += currentSegment;
-
-            if(currentDistance < doneDistance)
+            float segmentT = (currentDistance - (doneDistance - currentSegment)) / currentSegment;
+            
+            //Debug.LogError(currentDistance + " - " + (doneDistance - currentSegment) + " / " + currentSegment + "   " + currentPosition + "   " + t);
+            //Debug.LogError(currentDistance + "  " + rest + "   " + currentSegment + "   " + doneDistance + "   " + totalDistance + "   " + segmentT + "  " + currentPosition);
+            if (currentPosition == i)
             {
-                float segmentT = (currentDistance - (doneDistance - currentSegment)) / currentSegment;
-                Debug.LogError(currentDistance + "  " + rest + "   " + currentSegment + "   " + doneDistance + "   " + totalDistance + "   " + segmentT + "  " + currentPosition);
-                return Vector3.Lerp(postions[i].position, postions[i + 1].position, segmentT);
+                if (currentDistance < doneDistance)
+                {
+                    return Vector3.Lerp(postions[i].position, postions[i + 1].position, segmentT);
+                }
+                else
+                {
+                    currentPosition++;
+                    currentPosition = Mathf.Clamp(currentPosition, 0, postions.Length - 1);
+                    return postions[i + 1].position;
+                }
             }
-            else
-            {
-                currentPosition++;
-                return postions[i + 1].position;
-            }
-
         }
 
         return Vector3.zero;
@@ -100,6 +119,13 @@ public class ClientPath
 
     public Quaternion GetRotation()
     {
-        return Quaternion.LookRotation(postions[currentPosition + 1].position - postions[currentPosition].position);
+        if (currentPosition == postions.Length - 1)
+        {
+            return postions[currentPosition].rotation;
+        }
+        else
+        {
+            return Quaternion.LookRotation(postions[currentPosition + 1].position - postions[currentPosition].position);
+        }
     }
 }

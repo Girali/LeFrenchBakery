@@ -40,6 +40,7 @@ public class Client : MonoBehaviour
         enterPath = entr;
         exitPath = exit;
         article = a;
+        Debug.Log(Time.time);
     }
 
     private void Update()
@@ -94,6 +95,7 @@ public class Client : MonoBehaviour
             default:
                 break;
         }
+
 
         transform.position = tragetPosition;
         transform.rotation = targetRotation;

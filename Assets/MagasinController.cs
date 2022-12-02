@@ -82,7 +82,7 @@ public class MagasinController : MonoBehaviour
         {
             a = storages[Random.Range(0, storages.Length)];
         }
-        while (a == null && !a.wasUsed);
+        while (a == null || !a.wasUsed);
 
         return a.article;
     }
