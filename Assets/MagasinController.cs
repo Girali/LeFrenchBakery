@@ -22,6 +22,7 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private CameraController cameraController;
 
+    [SerializeField]
     private ArticleStorage[] storages;
 
     private void Start()

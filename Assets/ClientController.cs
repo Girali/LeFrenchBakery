@@ -5,15 +5,21 @@ using UnityEngine;
 
 public class ClientController : MonoBehaviour
 {
-
-    private List<Client> clients = new List<Client>();
     [SerializeField]
     private GameObject clientPrefab;
+
+    [SerializeField]
+    private QueuePlace[] clients;
 
     [SerializeField]
     private ClientPath[] enters;
     [SerializeField]
     private ClientPath[] exits;
+
+    private void Start()
+    {
+        AddClient();
+    }
 
     public void AddClient()
     {
@@ -29,13 +35,19 @@ public class ClientController : MonoBehaviour
 }
 
 [System.Serializable]
+public class QueuePlace
+{
+    public Transform position;
+    public Client client;
+}
+
+[System.Serializable]
 public class ClientPath
 {
     public Transform[] postions;
     public int currentPosition = 0;
     private float totalDistance = 0;
     private float doneDistance = 0;
-
 
     public ClientPath Copy()
     {
@@ -44,6 +56,7 @@ public class ClientPath
         c.currentPosition = currentPosition;
         c.totalDistance = totalDistance;
         c.doneDistance = doneDistance;
+        c.InitPath();
         return c;
     }
 
@@ -63,14 +76,23 @@ public class ClientPath
 
         for (int i = 0; i < currentPosition + 1; i++)
         {
-            float currentSegment = Vector3.Distance(postions[currentPosition].position, postions[currentPosition + 1].position);
+            float currentSegment = Vector3.Distance(postions[i].position, postions[i + 1].position);
             float rest = totalDistance - currentSegment - doneDistance;
+            float currentDistance = t * totalDistance;
             doneDistance += currentSegment;
-            if(t * totalDistance < doneDistance)
+
+            if(currentDistance < doneDistance)
             {
-                float segmentT = ((t * totalDistance) - doneDistance - rest) / currentSegment;
-                return Vector3.Lerp(postions[currentPosition].position, postions[currentPosition + 1].position, segmentT);
+                float segmentT = (currentDistance - (doneDistance - currentSegment)) / currentSegment;
+                Debug.LogError(currentDistance + "  " + rest + "   " + currentSegment + "   " + doneDistance + "   " + totalDistance + "   " + segmentT + "  " + currentPosition);
+                return Vector3.Lerp(postions[i].position, postions[i + 1].position, segmentT);
             }
+            else
+            {
+                currentPosition++;
+                return postions[i + 1].position;
+            }
+
         }
 
         return Vector3.zero;
