@@ -7,10 +7,11 @@ public class CookBook : Machine
     [SerializeField]
     private RecipeController recipeController;
 
-    public override void OnEnter(RecipeObject r, PlayerController p)
+    public override void OnEnter(RecipeObject r, GameObject p)
     {
         base.OnEnter(r,p);
         user.StartStopMove(false, this);
+        StartRecipe(0);
     }
 
     public override RecipeObject OnExit()
@@ -21,6 +22,7 @@ public class CookBook : Machine
 
     public void StartRecipe(int i)
     {
-        recipeController.StartReciepe(i);
+        recipeObject = recipeController.StartReciepe(i);
+        OnExit();
     }
 }

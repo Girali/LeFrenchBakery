@@ -13,7 +13,6 @@ public class RecetteController : MonoBehaviour
             if (article.typearticle.name == item.name)
             {
                 article.count++;
-                MagasinController.Instance.SubIngredient(item.count);
                 MagasinController.Instance.AddArticle(item);
                 articles[i] = article;
             }

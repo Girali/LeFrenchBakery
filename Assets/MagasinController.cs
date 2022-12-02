@@ -22,12 +22,13 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private CameraController cameraController;
 
+    private ArticleStorage[] storages;
+
     private void Start()
     {
         blackFadeOut.Play();
         cameraController.FromStartToKichen();
     }
-
 
     private float money = 100;
 
@@ -51,22 +52,41 @@ public class MagasinController : MonoBehaviour
             money -= f;
     }
 
-    public void AddIngredient(object o)
+    public void AddIngredient(Ingredient o)
     {
 
     }
 
-    public void SubIngredient(object o)
+    public void SubIngredient(Ingredient o)
     {
 
     }
 
-    public void AddArticle(object o)
+    public void AddArticle(Article o)
     {
-
+        for (int i = 0; i < storages.Length; i++)
+        {
+            if (storages[i].article.name == o.name)
+            {
+                storages[i].AddArticle();
+            }
+        }
     }
 
-    public void SubArticle(object o)
+    public Article GetPossibleArticle()
+    {
+        ArticleStorage a = null;
+
+        do
+        {
+            a = storages[Random.Range(0, storages.Length)];
+        }
+        while (a == null && !a.wasUsed);
+
+        return a.article;
+    }
+
+    public void SubArticle(Article o)
     {
 
     }

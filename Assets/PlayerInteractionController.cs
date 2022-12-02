@@ -9,6 +9,7 @@ public class PlayerInteractionController : MonoBehaviour
     private Interactable currentInteractable;
     private bool interacting = false;
     private Machine machineInUse;
+    private RecipeObject recipeObject;
 
     public void StartStopInteract(bool start, Machine machine)
     {
@@ -60,6 +61,7 @@ public class PlayerInteractionController : MonoBehaviour
                         {
                             machineInUse = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight).GetComponent<Machine>();
                             DGUI_Controller.Insatance.ShowInidicator(null, false);
+                            machineInUse.OnEnter(recipeObject, gameObject);
                         }
                     }
                 }
@@ -78,7 +80,12 @@ public class PlayerInteractionController : MonoBehaviour
             }
         }
 
-        if(interacting && currentInteractable != null)
+        if (interactDownLeft && currentInteractable != null)
+        {
+            currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight);
+        }
+
+        if (interacting && currentInteractable != null)
         {
             currentInteractable.Interact(interactLeft, interactDownLeft, interactDownRight);
         }

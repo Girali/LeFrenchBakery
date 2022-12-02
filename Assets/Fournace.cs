@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Fournace : Machine
 {
-    private RecipeObject recipeObject;
-
     public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
         base.Interact(leftClick, leftClickDown, rightClickDown);
