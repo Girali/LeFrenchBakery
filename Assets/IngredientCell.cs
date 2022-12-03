@@ -13,7 +13,7 @@ public class IngredientCell : MonoBehaviour
     public TMP_Text buttonText;
     public Ingredient item;
 
-    private void Start()
+    private void OnEnable()
     {
         title.text = item.name;
         icon.sprite = item.sprite;

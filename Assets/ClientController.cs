@@ -16,11 +16,6 @@ public class ClientController : MonoBehaviour
     [SerializeField]
     private ClientPath[] exits;
 
-    private void Start()
-    {
-        AddClient();
-    }
-
     public void AddClient()
     {
         Client c = Instantiate(clientPrefab).GetComponent<Client>();
@@ -31,21 +26,46 @@ public class ClientController : MonoBehaviour
         Article a = MagasinController.Instance.GetPossibleArticle();
 
         c.Init(enters[ietr].Copy(), exits[iext].Copy(), a);
+        c.onEnter += ClientEnters;
+        c.onSuccess += ClientSuccess;
+        c.onFail += ClientFailed;
     }
 
     public void ClientEnters(Client c)
     {
-
+        for (int i = 0; i < clients.Length; i++)
+        {
+            if (clients[i].client == null)
+            {
+                clients[i].client = c;
+                c.EnterShop(clients[i]);
+                break;
+            }
+        }
     }
 
     public void ClientSuccess(Client c)
     {
-
+        for (int i = 0; i < clients.Length; i++)
+        {
+            if (clients[i].client == c)
+            {
+                clients[i].client = null;
+                break;
+            }
+        }
     }
 
     public void ClientFailed(Client c)
     {
-
+        for (int i = 0; i < clients.Length; i++)
+        {
+            if (clients[i].client == c)
+            {
+                clients[i].client = null;
+                break;
+            }
+        }
     }
 }
 

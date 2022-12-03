@@ -14,4 +14,9 @@ public class ArticleStorage : Machine
         count++;
         wasUsed = true;
     }
+
+    public void SubArticle()
+    {
+        count--;
+    }
 }

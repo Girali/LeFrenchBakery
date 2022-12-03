@@ -23,7 +23,9 @@ public class MagasinController : MonoBehaviour
     private CameraController cameraController;
 
     [SerializeField]
-    private ArticleStorage[] storages;
+    private IngredientStock[] ingredientStocks;
+    [SerializeField]
+    private ArticleStorage[] articleStocks;
 
     private void Start()
     {
@@ -55,21 +57,33 @@ public class MagasinController : MonoBehaviour
 
     public void AddIngredient(Ingredient o)
     {
-
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            if (ingredientStocks[i].ingredient.ingredient == o.ingredient)
+            {
+                ingredientStocks[i].count++;
+            }
+        }
     }
 
     public void SubIngredient(Ingredient o)
     {
-
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            if (ingredientStocks[i].ingredient.ingredient == o.ingredient)
+            {
+                ingredientStocks[i].count--;
+            }
+        }
     }
 
     public void AddArticle(Article o)
     {
-        for (int i = 0; i < storages.Length; i++)
+        for (int i = 0; i < articleStocks.Length; i++)
         {
-            if (storages[i].article.name == o.name)
+            if (articleStocks[i].article.name == o.name)
             {
-                storages[i].AddArticle();
+                articleStocks[i].AddArticle();
             }
         }
     }
@@ -80,7 +94,7 @@ public class MagasinController : MonoBehaviour
 
         do
         {
-            a = storages[Random.Range(0, storages.Length)];
+            a = articleStocks[Random.Range(0, articleStocks.Length)];
         }
         while (a == null || !a.wasUsed);
 
@@ -89,6 +103,19 @@ public class MagasinController : MonoBehaviour
 
     public void SubArticle(Article o)
     {
-
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            if (articleStocks[i].article.name == o.name)
+            {
+                articleStocks[i].SubArticle();
+            }
+        }
     }
+}
+
+[System.Serializable]
+public class IngredientStock
+{
+    public Ingredient ingredient;
+    public int count;
 }
