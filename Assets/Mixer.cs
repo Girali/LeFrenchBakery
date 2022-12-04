@@ -17,6 +17,15 @@ public class Mixer : Machine
 
     private bool isLeft = false;
 
+    private void OnEnable()
+    {
+        mixer.finished += Finished;
+    }
+
+    private void OnDisable()
+    {
+        mixer.finished -= Finished;
+    }
 
     public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
@@ -38,11 +47,26 @@ public class Mixer : Machine
         miniGameProgress = Mathf.Clamp(miniGameProgress, 0, miniGameGoal);
         if(miniGameProgress == miniGameGoal)
         {
-            //finish
-            mixer.Show(false);
+            mixer.Success();
         }
 
         mixer.UpdateView(miniGameProgress / miniGameGoal, isLeft);
+    }
+
+    public override RecipeObject OnExit()
+    {
+        return base.OnExit();
+    }
+
+    public override void OnEnter(RecipeObject r, GameObject p)
+    {
+        base.OnEnter(r, p);
+    }
+
+    public void Finished()
+    {
+        mixer.Show(false);
+        OnExit();
     }
 
     public override Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)

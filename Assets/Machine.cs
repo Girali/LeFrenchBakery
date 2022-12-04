@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Machine : Interactable
 {
-    public string machineName;
-    public Type type;
+    [SerializeField]
+    private string machineName;
+    [SerializeField]
+    private Type type;
     protected PlayerController user = null;
     protected RecipeObject recipeObject;
 
-    public virtual void OnEnter(RecipeObject r, PlayerController p)
+    public Type GetMachineType { get => type; }
+
+    public virtual void OnEnter(RecipeObject r, GameObject p)
     {
         recipeObject = r;
-        user = p;
+        user = p.GetComponent<PlayerController>();
     }
 
     public virtual RecipeObject OnExit()
@@ -26,6 +30,9 @@ public class Machine : Interactable
     public enum Type
     {
         None,
+        CookBook,
+        Trash,
+        Ingredients,
         Four,
         Mixer
     }

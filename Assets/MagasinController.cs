@@ -22,12 +22,16 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private CameraController cameraController;
 
+    [SerializeField]
+    private IngredientStock[] ingredientStocks;
+    [SerializeField]
+    private ArticleStorage[] articleStocks;
+
     private void Start()
     {
         blackFadeOut.Play();
         cameraController.FromStartToKichen();
     }
-
 
     private float money = 100;
 
@@ -51,23 +55,89 @@ public class MagasinController : MonoBehaviour
             money -= f;
     }
 
-    public void AddIngredient(object o)
+    public IngredientStock FindStockByIngredent(Ingredient ing)
     {
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            if (ingredientStocks[i].ingredient.ingredient == ing.ingredient)
+                return ingredientStocks[i];
+        }
 
+        return null;
     }
 
-    public void SubIngredient(object o)
+    public ArticleStorage FindStorageByArticle(Article a)
     {
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            if (articleStocks[i].article.name == a.name)
+                return articleStocks[i];
+        }
 
+        return null;
     }
 
-    public void AddArticle(object o)
+    public void AddIngredient(Ingredient o)
     {
-
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            if (ingredientStocks[i].ingredient.ingredient == o.ingredient)
+            {
+                ingredientStocks[i].count++;
+            }
+        }
     }
 
-    public void SubArticle(object o)
+    public void SubIngredient(Ingredient o)
     {
-
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            if (ingredientStocks[i].ingredient.ingredient == o.ingredient)
+            {
+                ingredientStocks[i].count--;
+            }
+        }
     }
+
+    public void AddArticle(Article o)
+    {
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            if (articleStocks[i].article.name == o.name)
+            {
+                articleStocks[i].AddArticle();
+            }
+        }
+    }
+
+    public Article GetPossibleArticle()
+    {
+        ArticleStorage a = null;
+
+        do
+        {
+            a = articleStocks[Random.Range(0, articleStocks.Length)];
+        }
+        while (a == null || !a.wasUsed);
+
+        return a.article;
+    }
+
+    public void SubArticle(Article o)
+    {
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            if (articleStocks[i].article.name == o.name)
+            {
+                articleStocks[i].SubArticle();
+            }
+        }
+    }
+}
+
+[System.Serializable]
+public class IngredientStock
+{
+    public Ingredient ingredient;
+    public int count;
 }
