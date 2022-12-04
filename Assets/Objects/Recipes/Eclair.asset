@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59dc076261fb6a46814078e600858c2, type: 3}
+  m_Name: Eclair
+  m_EditorClassIdentifier: 
+  reciepeName: Eclair
+  icon: {fileID: 21300000, guid: 8e59912c80848b043b5750385d725a9d, type: 3}
+  description: au chocolat
+  steps:
+  - actionType: 0
+    ingredientToUse: 8
+    machineToUse: 0
+  - actionType: 0
+    ingredientToUse: 1
+    machineToUse: 0
+  - actionType: 0
+    ingredientToUse: 0
+    machineToUse: 0
+  - actionType: 1
+    ingredientToUse: 11
+    machineToUse: 2
+  - actionType: 1
+    ingredientToUse: 11
+    machineToUse: 1
+  - actionType: 0
+    ingredientToUse: 9
+    machineToUse: 0
+  - actionType: 0
+    ingredientToUse: 8
+    machineToUse: 0
+  - actionType: 0
+    ingredientToUse: 1
+    machineToUse: 0
+  - actionType: 0
+    ingredientToUse: 10
+    machineToUse: 0
+  result: {fileID: 11400000, guid: 48a0267b2067bf34a916f77ab637bf36, type: 2}

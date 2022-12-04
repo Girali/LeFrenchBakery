@@ -16,11 +16,9 @@ MonoBehaviour:
   peremption: 0
   creation: 0
   dureeConsommation: 0
-  sprite: {fileID: 21300000, guid: 7097ac79bf1bdbd4389e12b5fb08c6b6, type: 3}
+  sprite: {fileID: 21300000, guid: 0ad38990c1ed4ed41b7d3f658db40444, type: 3}
   description: 
-  recette: {fileID: 0}
+  recette: {fileID: 11400000, guid: 734c7fc16528148448504b02b35b307c, type: 2}
   qualite: 0
-  count: 0
-  typepain: {fileID: 11400000}
-  typeviennoiserie: {fileID: 0}
+  prefab: {fileID: 0}
   genrepain: 5
