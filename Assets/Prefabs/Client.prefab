@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 1858190756478433918}
   - component: {fileID: 1858190756478433917}
   - component: {fileID: 1858190756478433857}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Client
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,8 +190,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 5414817834661294624}
   pathTime: 10
-  waitLimit: 20
+  waitLimit: 5
   lerpSpeed: 0.1
+  joinQueueTime: 3
 --- !u!1 &1896828439977228341
 GameObject:
   m_ObjectHideFlags: 0

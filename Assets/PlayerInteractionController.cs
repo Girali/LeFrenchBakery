@@ -10,6 +10,12 @@ public class PlayerInteractionController : MonoBehaviour
     private bool interacting = false;
     private Machine machineInUse;
     private RecipeObject recipeObject;
+    private PlayerObjectController playerObjectController;
+
+    private void Start()
+    {
+        playerObjectController = GetComponent<PlayerObjectController>();
+    }
 
     public void StartStopInteract(bool start, Machine machine)
     {

@@ -18,6 +18,6 @@ public class IngredientStorage : Machine
 
     public void AddIngredient(Ingredient i)
     {
-
+        MagasinController.Instance.AddIngredient(i);
     }
 }

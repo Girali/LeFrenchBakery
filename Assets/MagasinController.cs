@@ -55,6 +55,28 @@ public class MagasinController : MonoBehaviour
             money -= f;
     }
 
+    public IngredientStock FindStockByIngredent(Ingredient ing)
+    {
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            if (ingredientStocks[i].ingredient.ingredient == ing.ingredient)
+                return ingredientStocks[i];
+        }
+
+        return null;
+    }
+
+    public ArticleStorage FindStorageByArticle(Article a)
+    {
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            if (articleStocks[i].article.name == a.name)
+                return articleStocks[i];
+        }
+
+        return null;
+    }
+
     public void AddIngredient(Ingredient o)
     {
         for (int i = 0; i < ingredientStocks.Length; i++)

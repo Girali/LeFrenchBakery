@@ -11,6 +11,8 @@ public class Machine : Interactable
     protected PlayerController user = null;
     protected RecipeObject recipeObject;
 
+    public Type GetMachineType { get => type; }
+
     public virtual void OnEnter(RecipeObject r, GameObject p)
     {
         recipeObject = r;
