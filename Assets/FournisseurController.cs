@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FournisseurController : MonoBehaviour
 {
     public List <StockItem> stockItems= new List <StockItem> ();
+
+    public StockItem FindIngredientStock(Ingredient i)
+    {
+        return stockItems.Where((ingr) => ingr.ingredient.ingredient == i.ingredient).ToArray()[0];
+    }
+
     public void BuyItemFromStock(Ingredient item)
     {
         for (int i = 0; i < stockItems.Count; i++)

@@ -5,8 +5,6 @@ using UnityEngine;
 public class RecipeController : MonoBehaviour
 {
     [SerializeField]
-    private Recipe[] recipes;
-    [SerializeField]
     private GameObject reciepPrefab;
     private List<RecipeObject> recipeObjects;
 
@@ -15,11 +13,11 @@ public class RecipeController : MonoBehaviour
         recipeObjects = new List<RecipeObject>();
     }
 
-    public RecipeObject StartReciepe(int i)
+    public RecipeObject StartReciepe(Article i)
     {
         GameObject g = Instantiate(reciepPrefab);
         RecipeObject o = g.GetComponent<RecipeObject>();
-        o.Init(recipes[i]);
+        o.Init(i.recette);
         recipeObjects.Add(o);
         return o;
     }

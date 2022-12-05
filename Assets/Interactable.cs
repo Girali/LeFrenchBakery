@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    public bool interactable = true;
+
     public virtual Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
         return this;

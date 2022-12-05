@@ -16,14 +16,14 @@ public class ClientController : MonoBehaviour
     [SerializeField]
     private ClientPath[] exits;
 
-    private IEnumerator Start()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(4);
-            AddClient();
-        }
-    }
+    //private IEnumerator Start()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(4);
+    //        AddClient();
+    //    }
+    //}
 
     public void AddClient()
     {

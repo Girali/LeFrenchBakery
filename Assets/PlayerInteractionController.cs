@@ -9,8 +9,9 @@ public class PlayerInteractionController : MonoBehaviour
     private Interactable currentInteractable;
     private bool interacting = false;
     private Machine machineInUse;
-    private RecipeObject recipeObject;
     private PlayerObjectController playerObjectController;
+
+    public bool Interacting { get => interacting; }
 
     private void Start()
     {
@@ -40,7 +41,7 @@ public class PlayerInteractionController : MonoBehaviour
             {
                 Interactable i = hit.GetComponent<Interactable>();
 
-                if (i != null)// hit interactable
+                if (i != null && i.interactable)// hit interactable
                 {
                     Vector3 v = hit.transform.position - transform.position;
                     v.y = 0;
@@ -65,9 +66,54 @@ public class PlayerInteractionController : MonoBehaviour
                     {
                         if (interactDownLeft)
                         {
-                            machineInUse = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight).GetComponent<Machine>();
+                            Interactable interactable = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight);
+                            machineInUse = interactable.GetComponent<Machine>();
+                            if (machineInUse == null)
+                            {
+                                InteractableObject io = interactable.GetComponent<InteractableObject>();
+                                if (io != null)
+                                {
+                                    playerObjectController.AddInteractableObject(io);
+                                }
+                            }
+                            else
+                            {
+
+                                try
+                                {
+                                    RecipeObject recipeObject = (RecipeObject)playerObjectController.InteractableObject;
+                                    machineInUse.OnEnter(recipeObject, gameObject);
+                                }
+                                catch (System.InvalidCastException)
+                                {
+                                    if (playerObjectController.InteractableObject != null)
+                                    {
+                                        try
+                                        {
+                                            ArticleStorage articleStorage = ((ArticleStorage)machineInUse);
+                                            articleStorage.AddArticle((ArticleObject)playerObjectController.InteractableObject);
+                                        }
+                                        catch (System.InvalidCastException)
+                                        {
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            ArticleStorage articleStorage = ((ArticleStorage)machineInUse);
+                                            articleStorage.SubArticle();
+                                        }
+                                        catch (System.InvalidCastException)
+                                        {
+
+                                        }
+                                    }
+                                }
+                            }
+
                             DGUI_Controller.Insatance.ShowInidicator(null, false);
-                            machineInUse.OnEnter(recipeObject, gameObject);
                         }
                     }
                 }
@@ -86,15 +132,15 @@ public class PlayerInteractionController : MonoBehaviour
             }
         }
 
-        if (interactDownLeft && currentInteractable != null)
-        {
-            currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight);
-        }
+        //if (interactDownLeft && currentInteractable != null)
+        //{
+        //    currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight);
+        //}
 
         if (interacting && currentInteractable != null)
         {
             currentInteractable.Interact(interactLeft, interactDownLeft, interactDownRight);
         }
-        
+
     }
 }

@@ -17,6 +17,6 @@ public class GUI_Controller : MonoBehaviour
         }
     }
 
-
+    public UI_RecipeFollower recipeFollower;
 
 }

@@ -22,13 +22,15 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private CameraController cameraController;
 
-    [SerializeField]
-    private IngredientStock[] ingredientStocks;
+    public MachinePairIcon[] machinePairIcons;
+    public IngredientStock[] ingredientStocks;
     [SerializeField]
     private ArticleStorage[] articleStocks;
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
+        Time.fixedDeltaTime = 1f / 60f;
         blackFadeOut.Play();
         cameraController.FromStartToKichen();
     }
@@ -99,17 +101,6 @@ public class MagasinController : MonoBehaviour
         }
     }
 
-    public void AddArticle(Article o)
-    {
-        for (int i = 0; i < articleStocks.Length; i++)
-        {
-            if (articleStocks[i].article.name == o.name)
-            {
-                articleStocks[i].AddArticle();
-            }
-        }
-    }
-
     public Article GetPossibleArticle()
     {
         ArticleStorage a = null;
@@ -122,17 +113,6 @@ public class MagasinController : MonoBehaviour
 
         return a.article;
     }
-
-    public void SubArticle(Article o)
-    {
-        for (int i = 0; i < articleStocks.Length; i++)
-        {
-            if (articleStocks[i].article.name == o.name)
-            {
-                articleStocks[i].SubArticle();
-            }
-        }
-    }
 }
 
 [System.Serializable]
@@ -140,4 +120,11 @@ public class IngredientStock
 {
     public Ingredient ingredient;
     public int count;
+}
+
+[System.Serializable]
+public class MachinePairIcon
+{
+    public Machine.Type type;
+    public Sprite sprite;
 }

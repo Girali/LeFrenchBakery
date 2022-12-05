@@ -34,6 +34,7 @@ public class Machine : Interactable
         Trash,
         Ingredients,
         Four,
-        Mixer
+        Mixer,
+        Storage
     }
 }

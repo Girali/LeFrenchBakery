@@ -27,11 +27,11 @@ MonoBehaviour:
     machineToUse: 0
   - actionType: 1
     ingredientToUse: 11
-    machineToUse: 2
+    machineToUse: 5
   - actionType: 0
     ingredientToUse: 7
     machineToUse: 0
   - actionType: 1
     ingredientToUse: 11
-    machineToUse: 1
+    machineToUse: 4
   result: {fileID: 11400000, guid: fc85a993a1bccd548b32472857c5d161, type: 2}

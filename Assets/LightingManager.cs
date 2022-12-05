@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class LightingManager : MonoBehaviour
 {
     [SerializeField] private Light DirectionalLight;
@@ -20,10 +19,12 @@ public class LightingManager : MonoBehaviour
         Soir,
         Nuit
     }
+
     private void Start()
     {
         Application.targetFrameRate = 60;
     }
+
     private void Update() 
     {
         Debug.Log(period);

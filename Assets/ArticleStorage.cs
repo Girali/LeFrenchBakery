@@ -5,18 +5,28 @@ using UnityEngine;
 public class ArticleStorage : Machine
 {
     public Article article;
-    [SerializeField]
-    private int count;
+    public int count;
     public bool wasUsed;
+    public DUI_Storage dui;
 
-    public void AddArticle()
+    private void Start()
     {
-        count++;
-        wasUsed = true;
+        dui.UpdateView(this);
+    }
+
+    public void AddArticle( ArticleObject a)
+    {
+        if (article.name == a.name)
+        {
+            count++;
+            wasUsed = true;
+            dui.UpdateView(this);
+        }
     }
 
     public void SubArticle()
     {
         count--;
+        dui.UpdateView(this);
     }
 }

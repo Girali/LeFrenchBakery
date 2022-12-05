@@ -16,6 +16,7 @@ public class Mixer : Machine
     private float miniGameGoal = 0;
 
     private bool isLeft = false;
+    private bool success = false;
 
     private void OnEnable()
     {
@@ -31,41 +32,47 @@ public class Mixer : Machine
     {
         base.Interact(leftClick, leftClickDown, rightClickDown);
 
-        if (isLeft && leftClickDown)
+        if (!success)
         {
-            miniGameProgress += Time.deltaTime * progressAmount;
-            isLeft = false;
-        }
-        else if(!isLeft && rightClickDown)
-        {
-            miniGameProgress += Time.deltaTime * progressAmount;
-            isLeft = true;
-        }
+            if (isLeft && leftClickDown)
+            {
+                miniGameProgress += (Time.deltaTime * progressAmount);
+                isLeft = false;
+            }
+            else if (!isLeft && rightClickDown)
+            {
+                miniGameProgress += (Time.deltaTime * progressAmount);
+                isLeft = true;
+            }
 
-        miniGameProgress -= Time.deltaTime * reprogressAmount;
+            miniGameProgress -= (Time.deltaTime * reprogressAmount);
 
-        miniGameProgress = Mathf.Clamp(miniGameProgress, 0, miniGameGoal);
-        if(miniGameProgress == miniGameGoal)
-        {
-            mixer.Success();
+            miniGameProgress = Mathf.Clamp(miniGameProgress, 0, miniGameGoal);
+            if (miniGameProgress == miniGameGoal)
+            {
+                mixer.Success();
+                success = true;
+            }
         }
-
         mixer.UpdateView(miniGameProgress / miniGameGoal, isLeft);
     }
 
     public override RecipeObject OnExit()
     {
+        user.StartStopMove(true, this);
         return base.OnExit();
     }
 
     public override void OnEnter(RecipeObject r, GameObject p)
     {
         base.OnEnter(r, p);
+        user.StartStopMove(false, this);
     }
 
     public void Finished()
     {
         mixer.Show(false);
+        recipeObject.UpdateStep(this);
         OnExit();
     }
 
@@ -74,6 +81,7 @@ public class Mixer : Machine
         base.InteractFirst(leftClick, leftClickDown, rightClickDown);
         mixer.Show(true);
         miniGameProgress = 0;
+        success = false;
         return (Interactable)this;
     }
 }

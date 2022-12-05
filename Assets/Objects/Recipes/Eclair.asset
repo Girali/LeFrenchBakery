@@ -27,10 +27,10 @@ MonoBehaviour:
     machineToUse: 0
   - actionType: 1
     ingredientToUse: 11
-    machineToUse: 2
+    machineToUse: 5
   - actionType: 1
     ingredientToUse: 11
-    machineToUse: 1
+    machineToUse: 4
   - actionType: 0
     ingredientToUse: 9
     machineToUse: 0

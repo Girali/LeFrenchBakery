@@ -27,8 +27,8 @@ MonoBehaviour:
     machineToUse: 0
   - actionType: 1
     ingredientToUse: 11
-    machineToUse: 2
+    machineToUse: 5
   - actionType: 1
     ingredientToUse: 11
-    machineToUse: 1
+    machineToUse: 4
   result: {fileID: 11400000, guid: 37fb8b51e4f76ad4db2304c5a618fe21, type: 2}

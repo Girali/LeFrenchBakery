@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class InteractableObject : Interactable
 {
-    private Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
+    protected GameObject holder;
+
+    public virtual void Init(Object o)
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
@@ -16,8 +24,24 @@ public class InteractableObject : Interactable
         return base.InteractFirst(leftClick, leftClickDown, rightClickDown);
     }
 
+    public void Hold(GameObject g)
+    {
+        holder = g;
+        Debug.LogError(holder);
+    }
+
+    public GameObject Release()
+    {
+        GameObject h = holder;
+        holder = null;
+        Debug.LogError(holder);
+        return h;
+    }
+
     public void Drop(GameObject g)
     {
-        rb.AddForce(g.transform.forward * 10f);
+        holder = null;
+        Debug.LogError(holder);
+        rb.AddForce(g.transform.forward * 100f);
     }
 }

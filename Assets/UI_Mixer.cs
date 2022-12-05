@@ -14,7 +14,7 @@ public class UI_Mixer : MonoBehaviour
     private GameObject right;
     public UnityAction finished;
     [SerializeField]
-    private GameObject successAnim;
+    private Jun_TweenRuntime successAnim;
 
     public void Show(bool b)
     {
@@ -23,7 +23,8 @@ public class UI_Mixer : MonoBehaviour
 
     public void Success()
     {
-        successAnim.SetActive(true);
+        successAnim.gameObject.SetActive(true);
+        successAnim.Play();
     }
 
     public void UpdateView(float v, bool isLeft)

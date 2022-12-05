@@ -13,6 +13,7 @@ public class IngredientCell : MonoBehaviour
     public Button button;
     public TMP_Text buttonText;
     public Ingredient item;
+    public IngredientStorage ingredientStorage;
 
     private void OnEnable()
     {
@@ -22,10 +23,21 @@ public class IngredientCell : MonoBehaviour
 
         IngredientStock stock = MagasinController.Instance.FindStockByIngredent(item);
         countText.text = stock.count + " X";
+
+        if(stock.count <= 0)
+        {
+            buttonText.text = "Empty";
+            button.interactable = false;
+        }
+        else
+        {
+            button.interactable= true;
+            buttonText.text = "Take";
+        }
     }
 
-    public void TakeIngredient(Ingredient i)
+    public void TakeIngredient()
     {
-        MagasinController.Instance.SubIngredient(item);
+        ingredientStorage.AddIngredient(item);
     }
 }

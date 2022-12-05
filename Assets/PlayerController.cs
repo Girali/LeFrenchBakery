@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private PlayerMotor pm;
     [SerializeField]
     private PlayerInteractionController pic;
+    [SerializeField]
+    private PlayerObjectController poc;
     private bool up;
     private bool down;
     private bool left;
@@ -70,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
         pm.Move(up, down, left, right, mousePosition);
         pic.Interact(interactLeft, interactDownLeft, interactDownRight, hitObject);
+        poc.Motor(interactDownRight);
     }
 
 }
