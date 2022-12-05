@@ -14,6 +14,11 @@ public Image icon;
     public Ingredient item;
     public FournisseurController monFournisseur;
 
+    private void Awake()
+    {
+        MagasinController.Instance.onIngredentStockChange += UpdateView;
+    }
+
     private void OnEnable()
     {
         icon.sprite = item.sprite;

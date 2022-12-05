@@ -14,10 +14,20 @@ public class UI_RecipeFollower : MonoBehaviour
     public Image currentStep;
     public GameObject working;
     public GameObject failed;
+    public GameObject success;
 
     public void Show(bool b)
     {
         gameObject.SetActive(b);
+    }
+
+    public void UpdateView(ArticleObject r)
+    {
+        icon.sprite = r.Article.sprite;
+        title.text = r.Article.name;
+        failed.SetActive(false);
+        working.SetActive(false);
+        success.SetActive(true);
     }
 
     public void UpdateView(RecipeObject r)
@@ -29,11 +39,14 @@ public class UI_RecipeFollower : MonoBehaviour
         {
             failed.SetActive(true);
             working.SetActive(false);
+            success.SetActive(false);
         }
         else
         {
+            success.SetActive(false);
             failed.SetActive(false);
             working.SetActive(true);
+
             if (r.CurrentStep < r.Recipe.steps.Length)
             {
                 if (r.Recipe.steps[r.CurrentStep].actionType == RecipeStep.ActionType.UseIngredient)
@@ -44,6 +57,11 @@ public class UI_RecipeFollower : MonoBehaviour
                 {
                     currentStep.sprite = MagasinController.Instance.machinePairIcons.Where((m) => m.type == r.Recipe.steps[r.CurrentStep].machineToUse).ToArray()[0].sprite;
                 }
+            }
+            else if (r.CurrentStep == r.Recipe.steps.Length)
+            {
+                working.SetActive(false);
+                success.SetActive(true);
             }
 
             for (int i = 0; i < ingredients.Length; i++)

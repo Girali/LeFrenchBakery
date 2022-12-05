@@ -9,12 +9,14 @@ public class RecipeObject : InteractableObject
     private MeshRenderer render;
     [SerializeField]
     private Gradient colorOverReciepe;
-    [SerializeField]
-    private GameObject articlePrefab;
+
+
     private Recipe recipe;
     private int currentStep;
     private int stepCount;
     private bool failed = false;
+    [SerializeField]
+    private GameObject articlePrefab;
 
     public Recipe Recipe { get => recipe; }
     public int CurrentStep { get => currentStep; }
@@ -77,6 +79,12 @@ public class RecipeObject : InteractableObject
         }
 
         SuccessCheck();
+        UpdateView();
+    }
+
+    public override void Hold(GameObject g)
+    {
+        base.Hold(g);
         UpdateView();
     }
 

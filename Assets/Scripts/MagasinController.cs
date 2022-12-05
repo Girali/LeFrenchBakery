@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MagasinController : MonoBehaviour
 {
@@ -27,6 +28,12 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private ArticleStorage[] articleStocks;
 
+    [SerializeField]
+    private ClientController clientController;
+
+    public UnityAction onMoneyChange;
+    public UnityAction onIngredentStockChange;
+
     private void Start()
     {
         Application.targetFrameRate = 60;
@@ -49,12 +56,16 @@ public class MagasinController : MonoBehaviour
     {
         if(f >= 0)
             money += f;
+        if(onMoneyChange != null)
+            onMoneyChange();
     }
 
     public void SubMoney(float f)
     {
         if (f >= 0)
             money -= f;
+        if(onMoneyChange != null)
+            onMoneyChange();
     }
 
     public IngredientStock FindStockByIngredent(Ingredient ing)
@@ -86,6 +97,8 @@ public class MagasinController : MonoBehaviour
             if (ingredientStocks[i].ingredient.ingredient == o.ingredient)
             {
                 ingredientStocks[i].count++;
+                if(onIngredentStockChange != null)
+                    onIngredentStockChange();
             }
         }
     }
@@ -97,6 +110,8 @@ public class MagasinController : MonoBehaviour
             if (ingredientStocks[i].ingredient.ingredient == o.ingredient)
             {
                 ingredientStocks[i].count--;
+                if(onIngredentStockChange != null)
+                    onIngredentStockChange();
             }
         }
     }

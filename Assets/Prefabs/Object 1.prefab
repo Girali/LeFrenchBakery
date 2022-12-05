@@ -108,9 +108,9 @@ GameObject:
   - component: {fileID: 4289701068857445206}
   - component: {fileID: 1954442898993427766}
   - component: {fileID: 6213000993009774999}
-  - component: {fileID: 3550751452304914297}
+  - component: {fileID: 1223929365811591003}
   m_Layer: 7
-  m_Name: ArticelObject
+  m_Name: Object 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3550751452304914297
+--- !u!114 &1223929365811591003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4289701068857445160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f43e7f699faf96f41a0568433d007a69, type: 3}
+  m_Script: {fileID: 11500000, guid: 96e348e02afca39469929bba5b0bb96f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1

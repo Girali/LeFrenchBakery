@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.WSA;
+using static UnityEngine.ParticleSystem;
 
 public class InteractableObject : Interactable
 {
@@ -24,24 +25,31 @@ public class InteractableObject : Interactable
         return base.InteractFirst(leftClick, leftClickDown, rightClickDown);
     }
 
-    public void Hold(GameObject g)
+    public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
+    {
+        if (poc.InteractableObject == null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public virtual void Hold(GameObject g)
     {
         holder = g;
-        Debug.LogError(holder);
     }
 
     public GameObject Release()
     {
         GameObject h = holder;
         holder = null;
-        Debug.LogError(holder);
         return h;
     }
 
     public void Drop(GameObject g)
     {
         holder = null;
-        Debug.LogError(holder);
         rb.AddForce(g.transform.forward * 100f);
     }
 }

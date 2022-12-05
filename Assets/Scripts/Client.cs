@@ -54,6 +54,51 @@ public class Client : Interactable
         exitPath = exit;
         article = a;
     }
+    
+    public void SellItem(PlayerObjectController poc)
+    {
+        if (poc.InteractableObject != null)
+        {
+            ArticleObject articleObject = poc.InteractableObject.GetComponent<ArticleObject>();
+            if (articleObject != null)
+            {
+                if(article.name == articleObject.Article.name)
+                {
+                    MagasinController.Instance.AddMoney(articleObject.Article.prix);
+                    poc.DestroyInteractableObject();
+                    SellSuccess();
+                }
+            }
+        }
+    }
+
+    public void SellSuccess()
+    {
+        interactable = false;
+        curentTime = 0;
+        currentPhase = Phase.Exiting;
+        ui.ShowIcon(false, article);
+
+        tempPlacePosition = transform.position;
+        tempPlaceRotation = transform.rotation;
+        exitFromQueue = true;
+        if (onSuccess != null)
+            onSuccess(this);
+    }
+
+    public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
+    {
+        if(poc.InteractableObject != null)
+        {
+            ArticleObject articleObject = poc.InteractableObject.GetComponent<ArticleObject>();
+            if(articleObject != null)
+            {
+                return article.name == articleObject.Article.name;
+            }
+        }
+
+        return false;
+    }
 
     public void EnterShop(QueuePlace place)
     {
@@ -80,6 +125,7 @@ public class Client : Interactable
                 tragetPosition = placeInQueue.position;
                 targetRotation = placeInQueue.rotation;
                 placeInQueue = null;
+                interactable = true;
             }
         }
         else
@@ -124,6 +170,7 @@ public class Client : Interactable
                         tempPlacePosition = transform.position;
                         tempPlaceRotation = transform.rotation;
                         exitFromQueue = true;
+                        interactable = false;
 
                         if (onFail != null)
                             onFail(this);

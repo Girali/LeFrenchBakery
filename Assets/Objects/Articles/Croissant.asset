@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce79ab24c44d8374bbd95101fe58dbdc, type: 3}
   m_Name: Croissant
   m_EditorClassIdentifier: 
-  prix: 0
+  prix: 20
   peremption: 0
   creation: 0
   dureeConsommation: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GUI_Controller : MonoBehaviour
@@ -19,4 +20,14 @@ public class GUI_Controller : MonoBehaviour
 
     public UI_RecipeFollower recipeFollower;
 
+    [SerializeField]
+    private Jun_TweenRuntime notifyAnim;
+    [SerializeField]
+    public TMP_Text notifyText;
+
+    public void Notify(string t)
+    {
+        notifyAnim.Play();
+        notifyText.text = t;
+    }
 }

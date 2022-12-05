@@ -18,6 +18,26 @@ public class Mixer : Machine
     private bool isLeft = false;
     private bool success = false;
 
+    public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
+    {
+        if (poc.InteractableObject == null)
+        {
+            return false;
+        }
+        else
+        {
+            RecipeObject recipeObject = poc.InteractableObject.GetComponent<RecipeObject>();
+            if (recipeObject != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     private void OnEnable()
     {
         mixer.finished += Finished;
@@ -57,13 +77,13 @@ public class Mixer : Machine
         mixer.UpdateView(miniGameProgress / miniGameGoal, isLeft);
     }
 
-    public override RecipeObject OnExit()
+    public override InteractableObject OnExit()
     {
         user.StartStopMove(true, this);
         return base.OnExit();
     }
 
-    public override void OnEnter(RecipeObject r, GameObject p)
+    public override void OnEnter(InteractableObject r, GameObject p)
     {
         base.OnEnter(r, p);
         user.StartStopMove(false, this);
@@ -72,7 +92,7 @@ public class Mixer : Machine
     public void Finished()
     {
         mixer.Show(false);
-        recipeObject.UpdateStep(this);
+        ((RecipeObject)interactableObject).UpdateStep(this);
         OnExit();
     }
 

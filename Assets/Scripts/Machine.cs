@@ -9,21 +9,21 @@ public class Machine : Interactable
     [SerializeField]
     private Type type;
     protected PlayerController user = null;
-    protected RecipeObject recipeObject;
+    protected InteractableObject interactableObject;
 
     public Type GetMachineType { get => type; }
 
-    public virtual void OnEnter(RecipeObject r, GameObject p)
+    public virtual void OnEnter(InteractableObject r, GameObject p)
     {
-        recipeObject = r;
+        interactableObject = r;
         user = p.GetComponent<PlayerController>();
     }
 
-    public virtual RecipeObject OnExit()
+    public virtual InteractableObject OnExit()
     {
         user = null;
-        RecipeObject r = recipeObject;
-        recipeObject = null;
+        InteractableObject r = interactableObject;
+        interactableObject = null;
         return r;
     }
 
@@ -35,6 +35,7 @@ public class Machine : Interactable
         Ingredients,
         Four,
         Mixer,
-        Storage
+        Storage,
+        Fournisseur
     }
 }

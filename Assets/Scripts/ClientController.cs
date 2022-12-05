@@ -16,14 +16,64 @@ public class ClientController : MonoBehaviour
     [SerializeField]
     private ClientPath[] exits;
 
-    //private IEnumerator Start()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(4);
-    //        AddClient();
-    //    }
-    //}
+    [SerializeField]
+    private float rushSpawnCycleDelay;
+    [SerializeField]
+    private float daySpawnCycleDelay;
+
+    [SerializeField]
+    private LightingManager lightingManager;
+
+    private Coroutine currentCycle;
+
+
+    private void Start()
+    {
+        lightingManager.onTimePeriodChange += OnPeriodUpdate;
+    }
+
+    private void OnPeriodUpdate(LightingManager.PeriodOfDay p)
+    {
+        switch (p)
+        {
+            case LightingManager.PeriodOfDay.PetitMatin:
+                break;
+            case LightingManager.PeriodOfDay.Matin:
+                currentCycle = StartCoroutine(StartRushCycle());
+                break;
+            case LightingManager.PeriodOfDay.Midi:
+                break;
+            case LightingManager.PeriodOfDay.Aprem:
+                StopCoroutine(currentCycle);
+                currentCycle = StartCoroutine(StartDayCycle());
+                break;
+            case LightingManager.PeriodOfDay.Soir:
+                break;
+            case LightingManager.PeriodOfDay.Nuit:
+                StopCoroutine(currentCycle);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private IEnumerator StartRushCycle()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(rushSpawnCycleDelay);
+            AddClient();
+        }
+    }
+
+    private IEnumerator StartDayCycle()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(daySpawnCycleDelay);
+            AddClient();
+        }
+    }
 
     public void AddClient()
     {

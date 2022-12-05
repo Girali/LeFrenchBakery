@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LightingManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class LightingManager : MonoBehaviour
         Nuit
     }
 
+    public UnityAction<PeriodOfDay> onTimePeriodChange;
+
     private void Start()
     {
         Application.targetFrameRate = 60;
@@ -27,49 +30,102 @@ public class LightingManager : MonoBehaviour
 
     private void Update() 
     {
-        Debug.Log(period);
-
-
         if (TimeOfDay + 6 > 6)
+        {
             if (TimeOfDay + 6 <= 8)
             {
-                period = PeriodOfDay.PetitMatin;
+                if (period != PeriodOfDay.PetitMatin)
+                {
+                    GUI_Controller.Insatance.Notify("Petit Matin");
+                    period = PeriodOfDay.PetitMatin;
+                    if(onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
 
         if (TimeOfDay + 6 > 8)
+        {
             if (TimeOfDay + 6 <= 12)
             {
-                period = PeriodOfDay.Matin;
+                if (period != PeriodOfDay.Matin)
+                {
+                    GUI_Controller.Insatance.Notify("Matin");
+                    period = PeriodOfDay.Matin;
+                    if (onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
 
         if (TimeOfDay + 6 > 12)
+        {
             if (TimeOfDay + 6 <= 14)
             {
-                period = PeriodOfDay.Midi;
+                if (period != PeriodOfDay.Midi)
+                {
+                    GUI_Controller.Insatance.Notify("Midi");
+                    period = PeriodOfDay.Midi;
+                    if (onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
 
         if (TimeOfDay + 6 > 14)
+        {
             if (TimeOfDay + 6 <= 16)
             {
-                period = PeriodOfDay.Aprem;
+                if (period != PeriodOfDay.Aprem)
+                {
+                    GUI_Controller.Insatance.Notify("Apres-Midi ");
+                    period = PeriodOfDay.Aprem;
+                    if (onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
 
         if (TimeOfDay + 6 > 16)
+        {
             if (TimeOfDay + 6 <= 19)
             {
-                period = PeriodOfDay.Soir;
+                if (period != PeriodOfDay.Soir)
+                {
+                    GUI_Controller.Insatance.Notify("Soir");
+                    period = PeriodOfDay.Soir;
+                    if (onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
 
         if (TimeOfDay + 6 > 19)
+        {
             if (TimeOfDay + 6 <= 24)
             {
-                period = PeriodOfDay.Nuit;
+                if (period != PeriodOfDay.Nuit)
+                {
+                    GUI_Controller.Insatance.Notify("Nuit");
+                    period = PeriodOfDay.Nuit;
+                    if (onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
         if (TimeOfDay + 6 > 0)
+        {
             if (TimeOfDay + 6 <= 6)
             {
-                period = PeriodOfDay.Nuit;
+                if (period != PeriodOfDay.Nuit)
+                {
+                    GUI_Controller.Insatance.Notify("Nuit");
+                    period = PeriodOfDay.Nuit;
+                    if (onTimePeriodChange != null)
+                        onTimePeriodChange(period);
+                }
             }
+        }
 
         if (Preset == null)
             return;

@@ -15,4 +15,9 @@ public class Interactable : MonoBehaviour
     {
 
     }
+
+    public virtual bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
+    {
+        return true;
+    }
 }

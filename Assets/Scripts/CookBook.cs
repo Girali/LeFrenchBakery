@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CookBook : Machine
@@ -11,7 +12,17 @@ public class CookBook : Machine
     [SerializeField]
     private GameObject ui;
 
-    public override void OnEnter(RecipeObject r, GameObject p)
+    public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
+    {
+        if (poc.InteractableObject != null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public override void OnEnter(InteractableObject r, GameObject p)
     {
         base.OnEnter(r,p);
         user.StartStopMove(false, this);
@@ -23,7 +34,7 @@ public class CookBook : Machine
         OnExit();
     }
 
-    public override RecipeObject OnExit()
+    public override InteractableObject OnExit()
     {
         ui.SetActive(false);
         user.StartStopMove(true, this);
@@ -32,8 +43,8 @@ public class CookBook : Machine
 
     public void StartRecipe(Article i)
     {
-        recipeObject = recipeController.StartReciepe(i);
-        user.GetComponent<PlayerObjectController>().AddInteractableObject(recipeObject);
+        interactableObject = recipeController.StartReciepe(i);
+        user.GetComponent<PlayerObjectController>().AddInteractableObject(interactableObject);
         OnExit();
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c2d73226ab7f64dac078d1100c88df, type: 3}
   m_Name: Pain aux noix
   m_EditorClassIdentifier: 
-  prix: 0
+  prix: 20
   peremption: 0
   creation: 0
   dureeConsommation: 0

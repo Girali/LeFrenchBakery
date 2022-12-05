@@ -41,7 +41,7 @@ public class PlayerInteractionController : MonoBehaviour
             {
                 Interactable i = hit.GetComponent<Interactable>();
 
-                if (i != null && i.interactable)// hit interactable
+                if (i != null && i.interactable && i.CanInteract(this, playerObjectController))// hit interactable
                 {
                     Vector3 v = hit.transform.position - transform.position;
                     v.y = 0;
@@ -68,48 +68,37 @@ public class PlayerInteractionController : MonoBehaviour
                         {
                             Interactable interactable = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight);
                             machineInUse = interactable.GetComponent<Machine>();
+
                             if (machineInUse == null)
                             {
                                 InteractableObject io = interactable.GetComponent<InteractableObject>();
-                                if (io != null)
+                                if (io == null)
+                                {
+                                    Client c = interactable.GetComponent<Client>();
+                                    if (c != null)
+                                    {
+                                        c.SellItem(playerObjectController);
+                                    }
+                                }
+                                else
                                 {
                                     playerObjectController.AddInteractableObject(io);
                                 }
                             }
                             else
                             {
+                                ArticleObject articleObject;
 
-                                try
-                                {
-                                    RecipeObject recipeObject = (RecipeObject)playerObjectController.InteractableObject;
-                                    machineInUse.OnEnter(recipeObject, gameObject);
+                                if (playerObjectController.InteractableObject != null && playerObjectController.InteractableObject.TryGetComponent<ArticleObject>(out articleObject))
+                                {   
+                                    if (machineInUse.GetMachineType == Machine.Type.Storage)
+                                    {
+                                        machineInUse.OnEnter(playerObjectController.InteractableObject, gameObject);
+                                    }
                                 }
-                                catch (System.InvalidCastException)
+                                else
                                 {
-                                    if (playerObjectController.InteractableObject != null)
-                                    {
-                                        try
-                                        {
-                                            ArticleStorage articleStorage = ((ArticleStorage)machineInUse);
-                                            articleStorage.AddArticle((ArticleObject)playerObjectController.InteractableObject);
-                                        }
-                                        catch (System.InvalidCastException)
-                                        {
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        try
-                                        {
-                                            ArticleStorage articleStorage = ((ArticleStorage)machineInUse);
-                                            articleStorage.SubArticle();
-                                        }
-                                        catch (System.InvalidCastException)
-                                        {
-
-                                        }
-                                    }
+                                    machineInUse.OnEnter(playerObjectController.InteractableObject, gameObject);
                                 }
                             }
 
