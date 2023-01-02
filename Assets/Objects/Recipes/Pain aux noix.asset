@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pain aux noix
   m_EditorClassIdentifier: 
   reciepeName: Pain aux noix
-  icon: {fileID: 21300000, guid: 2f572e8b9e84f3c428071ff400acff5f, type: 3}
+  icon: {fileID: 21300000, guid: e2cdd6d20a442b9418706b31d28e2144, type: 3}
   description: Sain pour l'esprit et le corps
   steps:
   - actionType: 0

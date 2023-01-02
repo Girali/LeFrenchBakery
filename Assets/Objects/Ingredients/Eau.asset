@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Eau
   m_EditorClassIdentifier: 
   ingredient: 1
-  prix: 5
+  prix: 1
   peremption: 20
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: 1523c281eb042a140887868e233f644e, type: 3}
-  description: Sans saveur.
+  sprite: {fileID: 21300000, guid: fee516d9ac9592b46aa8fa5d075898d6, type: 3}
+  description: 

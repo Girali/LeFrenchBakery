@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Beurre
   m_EditorClassIdentifier: 
   ingredient: 8
-  prix: 5
+  prix: 3
   peremption: 5
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: ff3f91541cdd0e84ca1be151a893ba57, type: 3}
+  sprite: {fileID: 21300000, guid: 3740fb940d0b41d45beff954d396ba78, type: 3}
   description: 

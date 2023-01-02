@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Croissant
   m_EditorClassIdentifier: 
   reciepeName: Croissant
-  icon: {fileID: 21300000, guid: 891fc6dba14b7864aa61d4d479448199, type: 3}
+  icon: {fileID: 21300000, guid: 52033c54e572e06489d62f42c92a83d1, type: 3}
   description: De lune
   steps:
   - actionType: 0

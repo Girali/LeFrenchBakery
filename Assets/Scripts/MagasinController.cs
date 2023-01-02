@@ -21,6 +21,8 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private Jun_TweenRuntime blackFadeOut;
     [SerializeField]
+    private Jun_TweenRuntime blackFadeIn;
+    [SerializeField]
     private CameraController cameraController;
 
     public MachinePairIcon[] machinePairIcons;
@@ -31,18 +33,106 @@ public class MagasinController : MonoBehaviour
     [SerializeField]
     private ClientController clientController;
 
+    [SerializeField]
+    private LightingManager lightingManager;
+
     public UnityAction onMoneyChange;
     public UnityAction onIngredentStockChange;
 
-    private void Start()
+    [SerializeField]
+    private float money = 35;
+    [SerializeField]
+    private int day = 1;
+
+    public void StartDay()
+    {
+        GUI_Controller.Insatance.Notify("Jour #" + day);
+    }
+
+    public void EndDay()
+    {
+        day++;
+        SaveGame();
+        blackFadeIn.Play();
+        Debug.LogError("ups"); 
+    }
+
+    public void LoadGame()
+    {
+        day = PlayerPrefs.GetInt("Day", 1);
+        money = PlayerPrefs.GetFloat("Money", 35);
+
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            int count = PlayerPrefs.GetInt("Article_Count_" + articleStocks[i].Article.name, 0);
+            bool used = (PlayerPrefs.GetInt("Article_Usage_" + articleStocks[i].Article.name, 0) == 1);
+            articleStocks[i].SetCount(count);
+            articleStocks[i].SetUse(used);
+        }
+
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            int count = PlayerPrefs.GetInt("Ingredient_Count_" + ingredientStocks[i].ingredient.name, 0);
+            ingredientStocks[i].count = count;
+        }
+    }
+
+    public void SaveGame()
+    {
+        PlayerPrefs.SetInt("Day", day);
+        PlayerPrefs.SetFloat("Money", money);
+
+        for (int i = 0; i < articleStocks.Length; i++)
+        {
+            PlayerPrefs.SetInt("Article_Count_" + articleStocks[i].Article.name, articleStocks[i].Count);
+            PlayerPrefs.SetInt("Article_Usage_" + articleStocks[i].Article.name, articleStocks[i].WasUsed ? 1 : 0);
+        }
+
+        for (int i = 0; i < ingredientStocks.Length; i++)
+        {
+            PlayerPrefs.SetInt("Ingredient_Count_" + ingredientStocks[i].ingredient.name, ingredientStocks[i].count);
+        }
+    }
+
+    private void Awake()
     {
         Application.targetFrameRate = 60;
         Time.fixedDeltaTime = 1f / 60f;
         blackFadeOut.Play();
         cameraController.FromStartToKichen();
+        lightingManager.onTimePeriodChange += OnPeriodUpdate;
+
+        LoadGame();
     }
 
-    private float money = 100;
+    private void OnPeriodUpdate(LightingManager.PeriodOfDay p)
+    {
+        switch (p)
+        {
+            case LightingManager.PeriodOfDay.PetitMatin:
+                StartDay();
+                break;
+            case LightingManager.PeriodOfDay.Matin:
+                    GUI_Controller.Insatance.Notify("Matin");
+                break;
+            case LightingManager.PeriodOfDay.Midi:
+                    GUI_Controller.Insatance.Notify("Midi");
+                break;
+            case LightingManager.PeriodOfDay.Aprem:
+                    GUI_Controller.Insatance.Notify("Apres-Midi ");
+                break;
+            case LightingManager.PeriodOfDay.Soir:
+                    GUI_Controller.Insatance.Notify("Soir");
+                break;
+            case LightingManager.PeriodOfDay.Nuit:
+                    GUI_Controller.Insatance.Notify("Nuit");
+                EndDay();
+                break;
+            default:
+                break;
+        }
+    }
+
 
     public float Money
     {
@@ -83,7 +173,7 @@ public class MagasinController : MonoBehaviour
     {
         for (int i = 0; i < articleStocks.Length; i++)
         {
-            if (articleStocks[i].article.name == a.name)
+            if (articleStocks[i].Article.name == a.name)
                 return articleStocks[i];
         }
 
@@ -120,13 +210,18 @@ public class MagasinController : MonoBehaviour
     {
         ArticleStorage a = null;
 
+        int i = 0;
+        int maxRounds = 100;
+
         do
         {
             a = articleStocks[Random.Range(0, articleStocks.Length)];
         }
-        while (a == null || !a.wasUsed);
+        while ((a == null || !a.WasUsed) && i < maxRounds);
 
-        return a.article;
+        a = articleStocks[0];
+
+        return a.Article;
     }
 }
 

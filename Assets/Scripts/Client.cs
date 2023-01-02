@@ -10,6 +10,9 @@ public class Client : Interactable
     [SerializeField]
     private DUI_Client ui;
 
+    [SerializeField]
+    private Animator animator;
+
     private ClientPath enterPath;
     private ClientPath exitPath;
     private Article article;
@@ -82,6 +85,9 @@ public class Client : Interactable
         tempPlacePosition = transform.position;
         tempPlaceRotation = transform.rotation;
         exitFromQueue = true;
+
+        animator.SetBool("Wait", false);
+
         if (onSuccess != null)
             onSuccess(this);
     }
@@ -108,6 +114,7 @@ public class Client : Interactable
         curentTime = 0;
     }
 
+
     private void Update()
     {
         if(placeInQueue != null)
@@ -126,6 +133,7 @@ public class Client : Interactable
                 targetRotation = placeInQueue.rotation;
                 placeInQueue = null;
                 interactable = true;
+                animator.SetBool("Wait", true);
             }
         }
         else
@@ -150,6 +158,7 @@ public class Client : Interactable
                         currentPhase = Phase.Awaiting;
                         ui.ShowIcon(true, article);
 
+
                         if (onEnter != null)
                             onEnter(this);
                     }
@@ -171,6 +180,8 @@ public class Client : Interactable
                         tempPlaceRotation = transform.rotation;
                         exitFromQueue = true;
                         interactable = false;
+
+                        animator.SetBool("Wait", false);
 
                         if (onFail != null)
                             onFail(this);
@@ -215,6 +226,30 @@ public class Client : Interactable
 
             transform.position = tragetPosition;
             transform.rotation = targetRotation;
+
+            Vector2Int v = GetOneVector(transform.forward);
+            animator.SetFloat("X", v.x);
+            animator.SetFloat("Y", v.y);
+        }
+    }
+
+    Vector3 lastPos = Vector3.zero;
+
+    public Vector2Int GetOneVector(Vector3 v)
+    {
+        if(Mathf.Abs(v.x) < Mathf.Abs(v.z))
+        {
+            if (v.z > 0)
+                return new Vector2Int(1, 0);
+            else
+                return new Vector2Int(-1, 0);
+        }
+        else
+        {
+            if (v.x > 0)
+                return new Vector2Int(0, 1);
+            else
+                return new Vector2Int(0, -1);
         }
     }
 }

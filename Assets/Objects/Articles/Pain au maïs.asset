@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c2d73226ab7f64dac078d1100c88df, type: 3}
   m_Name: "Pain au ma\xEFs"
   m_EditorClassIdentifier: 
-  prix: 20
+  prix: 10
   peremption: 0
   creation: 0
   dureeConsommation: 0
-  sprite: {fileID: 21300000, guid: 0ad38990c1ed4ed41b7d3f658db40444, type: 3}
+  sprite: {fileID: 21300000, guid: 746ea00f9cbbfd0499adf6d54a4f1491, type: 3}
   description: 
   recette: {fileID: 11400000, guid: 734c7fc16528148448504b02b35b307c, type: 2}
   qualite: 0

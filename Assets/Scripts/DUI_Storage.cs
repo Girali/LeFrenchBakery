@@ -11,9 +11,9 @@ public class DUI_Storage : MonoBehaviour
 
     public void UpdateView(ArticleStorage a) 
     {
-        icon.sprite = a.article.sprite;
+        icon.sprite = a.Article.sprite;
 
-        if(a.count <= 0)
+        if(a.Count <= 0)
         {
             icon.color = empty;
         }

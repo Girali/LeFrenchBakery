@@ -196,6 +196,18 @@ public class ClientPath
         return Vector3.zero;
     }
 
+    public Vector3 GetForward()
+    {
+        if (currentPosition == postions.Length - 1)
+        {
+            return postions[currentPosition].forward;
+        }
+        else
+        {
+            return (postions[currentPosition + 1].position - postions[currentPosition].position).normalized;
+        }
+    }
+
     public Quaternion GetRotation()
     {
         if (currentPosition == postions.Length - 1)

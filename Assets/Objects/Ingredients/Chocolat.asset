@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Chocolat
   m_EditorClassIdentifier: 
   ingredient: 10
-  prix: 12
+  prix: 3
   peremption: 10
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: b0e36f7162ac53c4187e66b16ab4d722, type: 3}
+  sprite: {fileID: 21300000, guid: ad51e657c638a5b4f8292fca6659241b, type: 3}
   description: 

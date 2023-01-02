@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Farine
   m_EditorClassIdentifier: 
   ingredient: 0
-  prix: 10
+  prix: 1
   peremption: 10
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: d357e08f60504e540ac32592a92b4bfe, type: 3}
-  description: "Ne se mange pas \xE0 la cuill\xE8re."
+  sprite: {fileID: 21300000, guid: 02bb8ba554202704a8e189345ee2ce84, type: 3}
+  description: 

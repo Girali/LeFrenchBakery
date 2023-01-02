@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Religieuse
   m_EditorClassIdentifier: 
   reciepeName: Religieuse
-  icon: {fileID: 21300000, guid: bab3893eac6b08c41977588995d057aa, type: 3}
+  icon: {fileID: 21300000, guid: 1ab6ac098ab03514b9dbd072b2844b5e, type: 3}
   description: PARCE QUE C'EST SACREMENT BON !!
   steps:
   - actionType: 0

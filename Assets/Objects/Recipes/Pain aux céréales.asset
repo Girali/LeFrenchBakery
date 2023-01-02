@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Pain aux c\xE9r\xE9ales"
   m_EditorClassIdentifier: 
   reciepeName: "Pain aux c\xE9r\xE9ales"
-  icon: {fileID: 21300000, guid: 900d9e2d1d45efb41b514e1ab2278663, type: 3}
+  icon: {fileID: 21300000, guid: 129e06eed61b75742a2058a427558334, type: 3}
   description: Une explosion de saveurs
   steps:
   - actionType: 0

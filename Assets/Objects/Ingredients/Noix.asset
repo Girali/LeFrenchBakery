@@ -17,5 +17,5 @@ MonoBehaviour:
   peremption: 0
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: 3aa247b921b320d42904e12db1d341ec, type: 3}
+  sprite: {fileID: 21300000, guid: f4852fbcec788b140abf7c59bf4b574a, type: 3}
   description: 

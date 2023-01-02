@@ -1,15 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class ArticleStorage : Machine
 {
-    public Article article;
-    public int count;
-    public bool wasUsed;
-    public DUI_Storage dui;
-    public GameObject articlePrefab;
+    [SerializeField]
+    private Article article;
+    [SerializeField]
+    private int count;
+    [SerializeField]
+    private bool wasUsed;
+    [SerializeField]
+    private DUI_Storage dui;
+    [SerializeField]
+    private GameObject articlePrefab;
+
+    public Article Article
+    {
+        get { return article; }
+    }
+
+    public int Count
+    {
+        get { return count; }
+    }
+
+    public bool WasUsed
+    {
+        get { return wasUsed; }
+    }
 
     public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
     {
@@ -59,6 +78,18 @@ public class ArticleStorage : Machine
             g.Init(article);
             poc.AddInteractableObject(g);
         }
+    }
+
+    public void SetCount(int i)
+    {
+        count = i;
+        dui.UpdateView(this);
+    }
+
+    public void SetUse(bool b)
+    {
+        wasUsed = b;
+        dui.UpdateView(this);
     }
 
     public override InteractableObject OnExit()

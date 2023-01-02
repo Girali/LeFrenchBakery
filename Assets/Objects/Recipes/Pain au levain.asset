@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pain au levain
   m_EditorClassIdentifier: 
   reciepeName: Pain au levain
-  icon: {fileID: 21300000, guid: bd48beaa10d12934ba733bcc331ed7b3, type: 3}
+  icon: {fileID: 21300000, guid: bdf20d1600c513f4eaeed4d3b0a6a4b0, type: 3}
   description: Il pourrait y en avoir tellement plus...
   steps:
   - actionType: 0

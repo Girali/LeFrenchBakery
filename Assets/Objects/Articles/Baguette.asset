@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c2d73226ab7f64dac078d1100c88df, type: 3}
   m_Name: Baguette
   m_EditorClassIdentifier: 
-  prix: 20
+  prix: 4
   peremption: 0
   creation: 0
   dureeConsommation: 0
-  sprite: {fileID: 21300000, guid: 7097ac79bf1bdbd4389e12b5fb08c6b6, type: 3}
-  description: la base
+  sprite: {fileID: 21300000, guid: 6a04574d03c33904aa59b092f4d77371, type: 3}
+  description: 
   recette: {fileID: 11400000, guid: 611f55de2477f2f429725531570192ab, type: 2}
   qualite: 2
   prefab: {fileID: 0}

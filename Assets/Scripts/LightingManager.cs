@@ -8,7 +8,8 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private LightingPreset Preset;
     [SerializeField, Range(0,24)] public float TimeOfDay;
-    [SerializeField] private float speed;
+    [SerializeField] private float timeCycle;
+    private float speed;
     public float timeOffset;
     public PeriodOfDay period;
     public enum PeriodOfDay
@@ -23,9 +24,9 @@ public class LightingManager : MonoBehaviour
 
     public UnityAction<PeriodOfDay> onTimePeriodChange;
 
-    private void Start()
+    private void Awake()
     {
-        Application.targetFrameRate = 60;
+        speed = 12 / timeCycle;
     }
 
     private void Update() 
@@ -36,7 +37,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.PetitMatin)
                 {
-                    GUI_Controller.Insatance.Notify("Petit Matin");
                     period = PeriodOfDay.PetitMatin;
                     if(onTimePeriodChange != null)
                         onTimePeriodChange(period);
@@ -50,7 +50,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.Matin)
                 {
-                    GUI_Controller.Insatance.Notify("Matin");
                     period = PeriodOfDay.Matin;
                     if (onTimePeriodChange != null)
                         onTimePeriodChange(period);
@@ -64,7 +63,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.Midi)
                 {
-                    GUI_Controller.Insatance.Notify("Midi");
                     period = PeriodOfDay.Midi;
                     if (onTimePeriodChange != null)
                         onTimePeriodChange(period);
@@ -78,7 +76,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.Aprem)
                 {
-                    GUI_Controller.Insatance.Notify("Apres-Midi ");
                     period = PeriodOfDay.Aprem;
                     if (onTimePeriodChange != null)
                         onTimePeriodChange(period);
@@ -92,7 +89,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.Soir)
                 {
-                    GUI_Controller.Insatance.Notify("Soir");
                     period = PeriodOfDay.Soir;
                     if (onTimePeriodChange != null)
                         onTimePeriodChange(period);
@@ -106,7 +102,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.Nuit)
                 {
-                    GUI_Controller.Insatance.Notify("Nuit");
                     period = PeriodOfDay.Nuit;
                     if (onTimePeriodChange != null)
                         onTimePeriodChange(period);
@@ -119,7 +114,6 @@ public class LightingManager : MonoBehaviour
             {
                 if (period != PeriodOfDay.Nuit)
                 {
-                    GUI_Controller.Insatance.Notify("Nuit");
                     period = PeriodOfDay.Nuit;
                     if (onTimePeriodChange != null)
                         onTimePeriodChange(period);

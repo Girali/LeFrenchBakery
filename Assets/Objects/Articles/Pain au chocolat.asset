@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce79ab24c44d8374bbd95101fe58dbdc, type: 3}
   m_Name: Pain au chocolat
   m_EditorClassIdentifier: 
-  prix: 20
+  prix: 11
   peremption: 0
   creation: 0
   dureeConsommation: 0
-  sprite: {fileID: 21300000, guid: ba529b06dcb416a45b3f99c382368a45, type: 3}
+  sprite: {fileID: 21300000, guid: 6f78f64e509b8d647a5cb1db7e8e80af, type: 3}
   description: 
   recette: {fileID: 11400000, guid: 52477602cf434ac488414c7ada4a2c7d, type: 2}
   qualite: 0

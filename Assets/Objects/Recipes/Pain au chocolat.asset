@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pain au chocolat
   m_EditorClassIdentifier: 
   reciepeName: Pain au chocolat
-  icon: {fileID: 21300000, guid: ba529b06dcb416a45b3f99c382368a45, type: 3}
+  icon: {fileID: 21300000, guid: 6f78f64e509b8d647a5cb1db7e8e80af, type: 3}
   description: Oui, c'est un pain au chocolat
   steps:
   - actionType: 0

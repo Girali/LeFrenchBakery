@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Sucre
   m_EditorClassIdentifier: 
   ingredient: 9
-  prix: 8
+  prix: 3
   peremption: 0
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: 1666adac3c3955845b8bcc2ccfd5da2f, type: 3}
+  sprite: {fileID: 21300000, guid: e1d054de774cb1640b7e749d9c8c7922, type: 3}
   description: 

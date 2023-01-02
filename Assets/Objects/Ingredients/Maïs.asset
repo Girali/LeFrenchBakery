@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: "Ma\xEFs"
   m_EditorClassIdentifier: 
   ingredient: 7
-  prix: 2
+  prix: 5
   peremption: 0
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: 8a0640dfca7f2e043b949930361e8dc6, type: 3}
+  sprite: {fileID: 21300000, guid: de730261919b62342a4ffdb1987bbeea, type: 3}
   description: 

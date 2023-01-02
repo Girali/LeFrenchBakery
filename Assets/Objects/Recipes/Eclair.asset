@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Eclair
   m_EditorClassIdentifier: 
   reciepeName: Eclair
-  icon: {fileID: 21300000, guid: 8e59912c80848b043b5750385d725a9d, type: 3}
+  icon: {fileID: 21300000, guid: 10f0eb10fdfb0ce4d97a32201070d824, type: 3}
   description: au chocolat
   steps:
   - actionType: 0

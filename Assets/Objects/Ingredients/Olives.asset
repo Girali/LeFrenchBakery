@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Olives
   m_EditorClassIdentifier: 
   ingredient: 5
-  prix: 7
+  prix: 5
   peremption: 3
   creation: 0
   dureeUtilisation: 0
-  sprite: {fileID: 21300000, guid: 7097ac79bf1bdbd4389e12b5fb08c6b6, type: 3}
+  sprite: {fileID: 21300000, guid: 8ec568d2d968d0a4eb61415b26990c49, type: 3}
   description: 

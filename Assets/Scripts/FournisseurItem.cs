@@ -41,7 +41,7 @@ public Image icon;
             }
             else
             {
-                prix.text = item.prix.ToString() + "€";
+                prix.text = item.prix.ToString() + "$";
                 bouton.interactable = true;
             }
         }

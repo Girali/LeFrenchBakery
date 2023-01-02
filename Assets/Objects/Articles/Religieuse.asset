@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce79ab24c44d8374bbd95101fe58dbdc, type: 3}
   m_Name: Religieuse
   m_EditorClassIdentifier: 
-  prix: 20
+  prix: 18
   peremption: 0
   creation: 0
   dureeConsommation: 0
-  sprite: {fileID: 21300000, guid: bab3893eac6b08c41977588995d057aa, type: 3}
+  sprite: {fileID: 21300000, guid: 1ab6ac098ab03514b9dbd072b2844b5e, type: 3}
   description: 
   recette: {fileID: 11400000, guid: 4495aefd4f562f84d9be45cd7c5e9462, type: 2}
   qualite: 0
