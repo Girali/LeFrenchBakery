@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ClientController : MonoBehaviour
@@ -17,15 +16,22 @@ public class ClientController : MonoBehaviour
     private ClientPath[] exits;
 
     [SerializeField]
-    private float rushSpawnCycleDelay;
-    [SerializeField]
-    private float daySpawnCycleDelay;
+    private LightingManager lightingManager;
 
     [SerializeField]
-    private LightingManager lightingManager;
+    private ClientStepFrequency[] clientStepFrequencies;
+    private int currentClientFrequencyIndex = 0;
 
     private Coroutine currentCycle;
 
+    public void UpdateClientFrequency(int day)
+    {
+        for (int i = 0; i < clientStepFrequencies.Length; i++)
+        {
+            if(day >= clientStepFrequencies[i].startAtDay)
+                currentClientFrequencyIndex = i;
+        }
+    }
 
     private void Start()
     {
@@ -51,6 +57,15 @@ public class ClientController : MonoBehaviour
                 break;
             case LightingManager.PeriodOfDay.Nuit:
                 StopCoroutine(currentCycle);
+                for (int i = 0; i < clients.Length; i++)
+                {
+                    if (clients[i].client != null)
+                    {
+                        clients[i].client.ExitShop();
+                    }
+                }
+                break;
+            case LightingManager.PeriodOfDay.Minuit:
                 break;
             default:
                 break;
@@ -61,7 +76,7 @@ public class ClientController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(rushSpawnCycleDelay);
+            yield return new WaitForSeconds(clientStepFrequencies[currentClientFrequencyIndex].rushSpawnCycleDelay);
             AddClient();
         }
     }
@@ -70,7 +85,7 @@ public class ClientController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(daySpawnCycleDelay);
+            yield return new WaitForSeconds(clientStepFrequencies[currentClientFrequencyIndex].daySpawnCycleDelay);
             AddClient();
         }
     }
@@ -126,6 +141,14 @@ public class ClientController : MonoBehaviour
             }
         }
     }
+}
+
+[System.Serializable]
+public class ClientStepFrequency
+{
+    public int startAtDay;
+    public float rushSpawnCycleDelay;
+    public float daySpawnCycleDelay;
 }
 
 [System.Serializable]

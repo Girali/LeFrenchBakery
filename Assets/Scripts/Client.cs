@@ -41,6 +41,7 @@ public class Client : Interactable
     [SerializeField]
     private float joinQueueTime = 3;
     private bool exitFromQueue = false;
+    private float timer = 0;
 
     public enum Phase
     {
@@ -88,6 +89,8 @@ public class Client : Interactable
 
         animator.SetBool("Wait", false);
 
+        SoundController.Instance.Sell();
+
         if (onSuccess != null)
             onSuccess(this);
     }
@@ -114,6 +117,23 @@ public class Client : Interactable
         curentTime = 0;
     }
 
+    public void ExitShop()
+    {
+        curentTime = 0;
+        timer = 0;
+        currentPhase = Phase.Exiting;
+        ui.ShowIcon(false, article);
+
+        tempPlacePosition = transform.position;
+        tempPlaceRotation = transform.rotation;
+        exitFromQueue = true;
+        interactable = false;
+
+        animator.SetBool("Wait", false);
+
+        if (onFail != null)
+            onFail(this);
+    }
 
     private void Update()
     {
@@ -138,7 +158,7 @@ public class Client : Interactable
         }
         else
         {
-            float t = 0;
+            timer = 0;
 
             switch (currentPhase)
             {
@@ -146,15 +166,15 @@ public class Client : Interactable
                     break;
                 case Phase.Entering:
                     curentTime += Time.deltaTime;
-                    t = curentTime / pathTime;
+                    timer = curentTime / pathTime;
 
-                    tragetPosition = Vector3.Lerp(transform.position, enterPath.GetPostion(t), lerpSpeed);
+                    tragetPosition = Vector3.Lerp(transform.position, enterPath.GetPostion(timer), lerpSpeed);
                     targetRotation = Quaternion.Lerp(transform.rotation, enterPath.GetRotation(), lerpSpeed);
 
-                    if (t >= 1f)
+                    if (timer >= 1f)
                     {
                         curentTime = 0;
-                        t = 0;
+                        timer = 0;
                         currentPhase = Phase.Awaiting;
                         ui.ShowIcon(true, article);
 
@@ -165,14 +185,14 @@ public class Client : Interactable
                     break;
                 case Phase.Awaiting:
                     curentTime += Time.deltaTime;
-                    t = curentTime / waitLimit;
+                    timer = curentTime / waitLimit;
 
-                    ui.UpdateView(t);
+                    ui.UpdateView(timer);
 
-                    if (t >= 1f)
+                    if (timer >= 1f)
                     {
                         curentTime = 0;
-                        t = 0;
+                        timer = 0;
                         currentPhase = Phase.Exiting;
                         ui.ShowIcon(false, article);
 
@@ -191,15 +211,15 @@ public class Client : Interactable
                     if (exitFromQueue)
                     {
                         curentTime += Time.deltaTime;
-                        t = curentTime / joinQueueTime;
+                        timer = curentTime / joinQueueTime;
 
-                        tragetPosition = Vector3.Lerp(tempPlacePosition, exitPath.postions[0].position, t);
-                        targetRotation = Quaternion.Lerp(tempPlaceRotation, exitPath.postions[0].rotation, t);
+                        tragetPosition = Vector3.Lerp(tempPlacePosition, exitPath.postions[0].position, timer);
+                        targetRotation = Quaternion.Lerp(tempPlaceRotation, exitPath.postions[0].rotation, timer);
 
-                        if (t >= 1f)
+                        if (timer >= 1f)
                         {
                             curentTime = 0;
-                            t = 0;
+                            timer = 0;
                             tragetPosition = transform.position;
                             targetRotation = transform.rotation;
                             exitFromQueue = false;
@@ -208,12 +228,12 @@ public class Client : Interactable
                     else
                     {
                         curentTime += Time.deltaTime;
-                        t = curentTime / pathTime;
+                        timer = curentTime / pathTime;
 
-                        tragetPosition = Vector3.Lerp(transform.position, exitPath.GetPostion(t), lerpSpeed);
+                        tragetPosition = Vector3.Lerp(transform.position, exitPath.GetPostion(timer), lerpSpeed);
                         targetRotation = Quaternion.Lerp(transform.rotation, exitPath.GetRotation(), lerpSpeed);
 
-                        if (t >= 1f)
+                        if (timer >= 1f)
                         {
                             Destroy(gameObject);
                         }

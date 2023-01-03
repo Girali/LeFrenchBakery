@@ -74,10 +74,12 @@ public class Fournace : Machine
             {
                 cooked = true;
                 interactable = true;
+                SoundController.Instance.Ding();
             }
 
             if (t2 > 1)
             {
+                SoundController.Instance.Fire();
                 ((RecipeObject)interactableObject).Fail();
                 started = false;
                 smoke.Play(true);

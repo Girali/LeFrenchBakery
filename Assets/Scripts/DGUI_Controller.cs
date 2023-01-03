@@ -20,7 +20,18 @@ public class DGUI_Controller : MonoBehaviour
     public GameObject interactIndicator;
     public GameObject interactTimer;
 
-    public void ShowInidicator(Transform pos, bool b)
+    private Transform toFollowObject = null;
+    private Vector3 offsetToFollow = Vector3.zero;
+
+    private void Update()
+    {
+        if(toFollowObject != null) 
+        {
+            interactIndicator.transform.position = toFollowObject.transform.position + offsetToFollow;
+        }
+    }
+
+    public void ShowInidicator(Transform pos, bool b, Vector3 offset = new Vector3())
     {
         interactIndicator.SetActive(b);
 
@@ -29,7 +40,10 @@ public class DGUI_Controller : MonoBehaviour
             Collider c = pos.GetComponent<Collider>();
             Vector3 p = c.bounds.center + Vector3.up;
 
-            interactIndicator.transform.position = p;
+            offsetToFollow = (p - pos.position) + offset;
+            toFollowObject = pos;
+
+            interactIndicator.transform.position = pos.position + offsetToFollow;
         }
     }
 

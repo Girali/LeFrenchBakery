@@ -11,6 +11,7 @@ public class UI_Money : MonoBehaviour
     {
         MagasinController.Instance.onMoneyChange += OnMoneyChange;
         text = GetComponent<TMP_Text>();
+        text.text = MagasinController.Instance.Money + "$";
     }
 
     public void OnMoneyChange()

@@ -1523,6 +1523,7 @@ GameObject:
   - component: {fileID: 5099342460639332078}
   - component: {fileID: 5099342460639332077}
   - component: {fileID: 5099342460639332084}
+  - component: {fileID: 8855017174950489985}
   m_Layer: 5
   m_Name: Cuisiner
   m_TagString: Untagged
@@ -1675,6 +1676,19 @@ MonoBehaviour:
   baked: 0
   modifiedFromInspector: 0
   bakedShadows: []
+--- !u!114 &8855017174950489985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099342460639332075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eaf02b679602b04fbf0d44a7ac1b67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundType: 0
 --- !u!1 &5099342460750875409
 GameObject:
   m_ObjectHideFlags: 0

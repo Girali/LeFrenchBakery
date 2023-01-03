@@ -23,7 +23,15 @@ public class GUI_Controller : MonoBehaviour
     [SerializeField]
     private Jun_TweenRuntime notifyAnim;
     [SerializeField]
-    public TMP_Text notifyText;
+    private TMP_Text notifyText;
+
+    [SerializeField]
+    private UI_Pause pause;
+
+    public void ShowPause(bool b)
+    {
+        pause.gameObject.SetActive(b);
+    }
 
     public void Notify(string t)
     {

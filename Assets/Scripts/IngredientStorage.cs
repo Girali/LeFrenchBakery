@@ -34,6 +34,7 @@ public class IngredientStorage : Machine
         base.OnEnter(r, p);
         user.StartStopMove(false, this);
         ui.SetActive(true);
+        AppController.Instance.Pausable = false;
     }
 
     public void Quit()
@@ -43,6 +44,7 @@ public class IngredientStorage : Machine
 
     public override InteractableObject OnExit()
     {
+        AppController.Instance.Pausable = true;
         ui.SetActive(false);
         user.StartStopMove(true, this);
         return base.OnExit();
@@ -50,6 +52,7 @@ public class IngredientStorage : Machine
 
     public void AddIngredient(Ingredient i)
     {
+        SoundController.Instance.PutIngredient();
         ((RecipeObject)interactableObject).UpdateStep(i);
         MagasinController.Instance.SubIngredient(i);
         OnExit();

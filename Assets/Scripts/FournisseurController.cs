@@ -19,11 +19,20 @@ public class FournisseurController : MonoBehaviour
             StockItem stockItem = stockItems[i];
             if (stockItem.ingredient.ingredient==item.ingredient)
             {
+                SoundController.Instance.BuyItem();
                 stockItem.count--;
                 MagasinController.Instance.SubMoney(item.prix);
                 MagasinController.Instance.AddIngredient(item);
                 stockItems[i] = stockItem;
             }
+        }
+    }
+
+    public void ResetStock()
+    {
+        for (int i = 0; i < stockItems.Count; i++)
+        {
+            stockItems[i].count = 20;
         }
     }
 }
