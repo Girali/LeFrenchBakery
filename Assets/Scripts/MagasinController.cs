@@ -269,7 +269,8 @@ public class MagasinController : MonoBehaviour
         }
         while ((a == null || !a.WasUsed) && i < maxRounds);
 
-        a = articleStocks[0];
+        if(i >= maxRounds)
+            a = articleStocks[0];
 
         return a.Article;
     }
