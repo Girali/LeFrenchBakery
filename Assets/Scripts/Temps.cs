@@ -12,9 +12,11 @@ public class Temps : MonoBehaviour
     public float rotationStart;
     public float rotationEnd;
 
+    public float rotationSpeed;
+
     private void Update()
     {
-        float timepercent = lightingManager.TimeOfDay/13f;
+        float timepercent = lightingManager.TimePercent;
         fill.color = gradient.Evaluate(timepercent);
         pivot.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Lerp(rotationStart, rotationEnd, timepercent)));
     }

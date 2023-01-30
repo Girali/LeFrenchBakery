@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RecipeObject : InteractableObject
 {
     [SerializeField]
-    private MeshRenderer render;
-    [SerializeField]
     private Gradient colorOverReciepe;
-
+    [SerializeField]
+    private Image render;
 
     private Recipe recipe;
     private int currentStep;
@@ -44,6 +44,7 @@ public class RecipeObject : InteractableObject
         {
             if (currentStep == stepCount + 1)
             {
+                SoundController.Instance.Success();
                 InteractableObject g = Instantiate(articlePrefab).GetComponent<InteractableObject>();
                 g.Init(recipe.result);
                 GameObject h = holder.GetComponent<PlayerObjectController>().DestroyInteractableObject();
@@ -60,6 +61,7 @@ public class RecipeObject : InteractableObject
         }
         else
         {
+            SoundController.Instance.Failed();
             failed = true;
         }
 
@@ -75,6 +77,7 @@ public class RecipeObject : InteractableObject
         }
         else
         {
+            SoundController.Instance.Failed();
             failed = true;
         }
 
@@ -91,9 +94,9 @@ public class RecipeObject : InteractableObject
     public void UpdateView()
     {
         if (failed)
-            render.material.color = Color.black;
+            render.color = Color.black;
         else
-            render.material.color = colorOverReciepe.Evaluate(currentStep / (float)stepCount);
+            render.color = colorOverReciepe.Evaluate(currentStep / (float)stepCount);
 
         GUI_Controller.Insatance.recipeFollower.UpdateView(this);
     }

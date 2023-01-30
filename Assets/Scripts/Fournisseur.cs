@@ -18,10 +18,12 @@ public class Fournisseur : Machine
         base.OnEnter(r, p);
         user.StartStopMove(false, this);
         ui.SetActive(true);
+        AppController.Instance.Pausable = false;
     }
 
     public override InteractableObject OnExit()
     {
+        AppController.Instance.Pausable = true;
         ui.SetActive(false);
         user.StartStopMove(true, this);
         return base.OnExit();

@@ -50,12 +50,18 @@ public class PlayerInteractionController : MonoBehaviour
                     if (currentInteractable == null && dist < minDistance)// current is null and in range
                     {
                         currentInteractable = i;
-                        DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
+                        if(currentInteractable.GetComponent<InteractableObject>() != null)
+                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true, Vector3.down);
+                        else
+                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
                     }
                     else if (currentInteractable != i && dist < minDistance)// current is not current and in range
                     {
                         currentInteractable = i;
-                        DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
+                        if (currentInteractable.GetComponent<InteractableObject>() != null)
+                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true, Vector3.down);
+                        else
+                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
                     }
                     else if (currentInteractable != i && dist > minDistance)// current is ok and out range
                     {
@@ -67,6 +73,7 @@ public class PlayerInteractionController : MonoBehaviour
                         if (interactDownLeft)
                         {
                             Interactable interactable = currentInteractable.InteractFirst(interactLeft, interactDownLeft, interactDownRight);
+
                             machineInUse = interactable.GetComponent<Machine>();
 
                             if (machineInUse == null)
@@ -102,6 +109,7 @@ public class PlayerInteractionController : MonoBehaviour
                                 }
                             }
 
+                            SoundController.Instance.Interact();
                             DGUI_Controller.Insatance.ShowInidicator(null, false);
                         }
                     }

@@ -5,13 +5,29 @@ using UnityEngine.Events;
 
 public class LightingManager : MonoBehaviour
 {
-    [SerializeField] private Light DirectionalLight;
-    [SerializeField] private LightingPreset Preset;
-    [SerializeField, Range(0,24)] public float TimeOfDay;
-    [SerializeField] private float timeCycle;
+    [SerializeField]
+    private Light directionalLight;
+    [SerializeField]
+    private LightingPreset preset;
+    [SerializeField, Range(0, 24)]
+    private float timeOfDay;
+    [SerializeField]
+    private float timeCycle;
     private float speed;
-    public float timeOffset;
-    public PeriodOfDay period;
+    [SerializeField]
+    private float timeOffset;
+    [SerializeField]
+    private float timeOffsetPercent;
+    [SerializeField]
+    private float rotationOffset;
+    private float timePercent;
+    [SerializeField]
+    private PeriodOfDay period = PeriodOfDay.Minuit;
+
+    [SerializeField]
+    private Vector2 rotationLimit;
+
+    public UnityAction<PeriodOfDay> onTimePeriodChange;
     public enum PeriodOfDay
     {
         PetitMatin,
@@ -19,139 +35,133 @@ public class LightingManager : MonoBehaviour
         Midi,
         Aprem,
         Soir,
-        Nuit
+        Nuit,
+        Minuit
     }
 
-    public UnityAction<PeriodOfDay> onTimePeriodChange;
+    public float TimeOfDay
+    {
+        get => timeOfDay;
+    }
+    public float TimePercent { get => timePercent; }
+
+    public void ResetDay()
+    {
+        timeOfDay = timeOffset;
+    }
 
     private void Awake()
     {
+        timeOfDay = timeOffset;
         speed = 12 / timeCycle;
     }
 
-    private void Update() 
+    private void Update()
     {
-        if (TimeOfDay + 6 > 6)
+        if (timeOfDay > 0 && timeOfDay <= 2)
         {
-            if (TimeOfDay + 6 <= 8)
+            if (period != PeriodOfDay.Minuit)
             {
-                if (period != PeriodOfDay.PetitMatin)
-                {
-                    period = PeriodOfDay.PetitMatin;
-                    if(onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
+                period = PeriodOfDay.Minuit;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
             }
         }
 
-        if (TimeOfDay + 6 > 8)
+        if (timeOfDay > 2 && timeOfDay <= 6)
         {
-            if (TimeOfDay + 6 <= 12)
+            if (period != PeriodOfDay.PetitMatin)
             {
-                if (period != PeriodOfDay.Matin)
-                {
-                    period = PeriodOfDay.Matin;
-                    if (onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
+                period = PeriodOfDay.PetitMatin;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
             }
         }
 
-        if (TimeOfDay + 6 > 12)
+        if (timeOfDay > 6 && timeOfDay <= 12)
         {
-            if (TimeOfDay + 6 <= 14)
+            if (period != PeriodOfDay.Matin)
             {
-                if (period != PeriodOfDay.Midi)
-                {
-                    period = PeriodOfDay.Midi;
-                    if (onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
+                period = PeriodOfDay.Matin;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
             }
         }
 
-        if (TimeOfDay + 6 > 14)
+        if (timeOfDay > 12 && timeOfDay <= 14)
         {
-            if (TimeOfDay + 6 <= 16)
+            if (period != PeriodOfDay.Midi)
             {
-                if (period != PeriodOfDay.Aprem)
-                {
-                    period = PeriodOfDay.Aprem;
-                    if (onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
+                period = PeriodOfDay.Midi;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
             }
         }
 
-        if (TimeOfDay + 6 > 16)
+        if (timeOfDay > 14 && timeOfDay <= 16)
         {
-            if (TimeOfDay + 6 <= 19)
+            if (period != PeriodOfDay.Aprem)
             {
-                if (period != PeriodOfDay.Soir)
-                {
-                    period = PeriodOfDay.Soir;
-                    if (onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
+                period = PeriodOfDay.Aprem;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
             }
         }
 
-        if (TimeOfDay + 6 > 19)
+        if (timeOfDay > 16 && timeOfDay <= 19)
         {
-            if (TimeOfDay + 6 <= 24)
+            if (period != PeriodOfDay.Soir)
             {
-                if (period != PeriodOfDay.Nuit)
-                {
-                    period = PeriodOfDay.Nuit;
-                    if (onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
-            }
-        }
-        if (TimeOfDay + 6 > 0)
-        {
-            if (TimeOfDay + 6 <= 6)
-            {
-                if (period != PeriodOfDay.Nuit)
-                {
-                    period = PeriodOfDay.Nuit;
-                    if (onTimePeriodChange != null)
-                        onTimePeriodChange(period);
-                }
+                period = PeriodOfDay.Soir;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
             }
         }
 
-        if (Preset == null)
+        if (timeOfDay > 19 && timeOfDay <= 24)
+        {
+            if (period != PeriodOfDay.Nuit)
+            {
+                period = PeriodOfDay.Nuit;
+                if (onTimePeriodChange != null)
+                    onTimePeriodChange(period);
+            }
+        }
+
+        if (preset == null)
             return;
+
         if (Application.isPlaying)
         {
-            TimeOfDay += Time.deltaTime*speed;
-            TimeOfDay %= 24;
-            UpdateLighting(TimeOfDay / 24f);
+            timeOfDay += Time.deltaTime * speed;
+            timeOfDay %= 24;
+            timePercent = ((timeOfDay + timeOffsetPercent) % 24) / 24f;
+            UpdateLighting(timePercent);
         }
         else
         {
-            UpdateLighting(TimeOfDay / 24f);
+            timePercent = ((timeOfDay + timeOffsetPercent) % 24) / 24f;
+            UpdateLighting(timePercent);
         }
     }
     private void UpdateLighting(float timePercent)
     {
-        RenderSettings.ambientLight = Preset.AmbientColor.Evaluate(timePercent);
-        RenderSettings.fogColor = Preset.FogColor.Evaluate(timePercent);
-        if (DirectionalLight!=null)
+        RenderSettings.ambientLight = preset.AmbientColor.Evaluate(timePercent);
+        RenderSettings.fogColor = preset.FogColor.Evaluate(timePercent);
+        if (directionalLight != null)
         {
-            DirectionalLight.color = Preset.DirectionalColor.Evaluate(timePercent);
-            DirectionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - timeOffset, 170, 0));
+            directionalLight.color = preset.DirectionalColor.Evaluate(timePercent);
+            directionalLight.transform.localRotation = Quaternion.Euler(new Vector3(Mathf.Lerp(rotationLimit.x, rotationLimit.y, timePercent) - rotationOffset, 170, 0));
         }
     }
 
     private void OnValidate()
     {
-        if (DirectionalLight != null)
+        if (directionalLight != null)
             return;
         if (RenderSettings.sun != null)
         {
-            DirectionalLight = RenderSettings.sun;
+            directionalLight = RenderSettings.sun;
         }
         else
         {
@@ -160,7 +170,7 @@ public class LightingManager : MonoBehaviour
             {
                 if (light.type == LightType.Directional)
                 {
-                    DirectionalLight = light;
+                    directionalLight = light;
                     return;
                 }
             }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class MagasinController : MonoBehaviour
 {
@@ -24,7 +25,8 @@ public class MagasinController : MonoBehaviour
     private Jun_TweenRuntime blackFadeIn;
     [SerializeField]
     private CameraController cameraController;
-
+    [SerializeField]
+    private FournisseurController fournisseurController;
     public MachinePairIcon[] machinePairIcons;
     public IngredientStock[] ingredientStocks;
     [SerializeField]
@@ -46,21 +48,36 @@ public class MagasinController : MonoBehaviour
 
     public void StartDay()
     {
+        blackFadeOut.Play();
         GUI_Controller.Insatance.Notify("Jour #" + day);
+    }
+
+    public void NextDay()
+    {
+        day++;
+        clientController.UpdateClientFrequency(day);
+        fournisseurController.ResetStock();
+        lightingManager.ResetDay();
+        blackFadeIn.gameObject.SetActive(false);
+        SaveGame();
     }
 
     public void EndDay()
     {
-        day++;
-        SaveGame();
+        blackFadeIn.gameObject.SetActive(true);
         blackFadeIn.Play();
-        Debug.LogError("ups"); 
     }
 
     public void LoadGame()
     {
+        bool firstTime = PlayerPrefs.GetInt("FirstTime", 0) == 0;
         day = PlayerPrefs.GetInt("Day", 1);
         money = PlayerPrefs.GetFloat("Money", 35);
+
+        if (onMoneyChange != null)
+            onMoneyChange();
+
+        clientController.UpdateClientFrequency(day);
 
         for (int i = 0; i < articleStocks.Length; i++)
         {
@@ -74,11 +91,39 @@ public class MagasinController : MonoBehaviour
         {
             int count = PlayerPrefs.GetInt("Ingredient_Count_" + ingredientStocks[i].ingredient.name, 0);
             ingredientStocks[i].count = count;
+
+            if (firstTime)
+            {
+                switch (ingredientStocks[i].ingredient.ingredient)
+                {
+                    case Ingredient.NomIngredient.Farine:
+                        ingredientStocks[i].count = 5;
+                        break;
+                    case Ingredient.NomIngredient.Eau:
+                        ingredientStocks[i].count = 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+
+        if (firstTime)
+        {
+            articleStocks[0].SetCount(5);
+            articleStocks[0].SetUse(true);
+        }
+    }
+
+    [ContextMenu("Reset Save")]
+    public void ResetSave()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
     public void SaveGame()
     {
+        PlayerPrefs.SetInt("FirstTime", 1);
         PlayerPrefs.SetInt("Day", day);
         PlayerPrefs.SetFloat("Money", money);
 
@@ -94,13 +139,15 @@ public class MagasinController : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         Application.targetFrameRate = 60;
         Time.fixedDeltaTime = 1f / 60f;
         blackFadeOut.Play();
         cameraController.FromStartToKichen();
         lightingManager.onTimePeriodChange += OnPeriodUpdate;
+
+        SoundController.Instance.BakeryThemeStart();
 
         LoadGame();
     }
@@ -126,6 +173,8 @@ public class MagasinController : MonoBehaviour
                 break;
             case LightingManager.PeriodOfDay.Nuit:
                     GUI_Controller.Insatance.Notify("Nuit");
+                break;
+            case LightingManager.PeriodOfDay.Minuit:
                 EndDay();
                 break;
             default:
@@ -215,11 +264,13 @@ public class MagasinController : MonoBehaviour
 
         do
         {
+            i++;
             a = articleStocks[Random.Range(0, articleStocks.Length)];
         }
         while ((a == null || !a.WasUsed) && i < maxRounds);
 
-        a = articleStocks[0];
+        if(i >= maxRounds)
+            a = articleStocks[0];
 
         return a.Article;
     }

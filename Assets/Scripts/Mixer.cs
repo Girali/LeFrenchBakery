@@ -58,11 +58,13 @@ public class Mixer : Machine
             {
                 miniGameProgress += (Time.deltaTime * progressAmount);
                 isLeft = false;
+                SoundController.Instance.Mix();
             }
             else if (!isLeft && rightClickDown)
             {
                 miniGameProgress += (Time.deltaTime * progressAmount);
                 isLeft = true;
+                SoundController.Instance.Mix();
             }
 
             miniGameProgress -= (Time.deltaTime * reprogressAmount);
