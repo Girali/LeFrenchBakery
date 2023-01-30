@@ -14,6 +14,9 @@ public class Fournace : Machine
     [SerializeField]
     private ParticleSystem smoke;
 
+    [SerializeField]
+    private MeshRenderer render;
+
     private bool started = false;
     private bool cooked = false;
     private float timerStart;
@@ -28,6 +31,8 @@ public class Fournace : Machine
     private bool retrivedThisFrame = false;
 
     DUI_Timer timer;
+    Coroutine crt;
+
 
     public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
     {
@@ -94,6 +99,11 @@ public class Fournace : Machine
 
             if (!started && !cooked)
             {
+                if (crt != null)
+                    StopCoroutine(crt);
+
+                crt = StartCoroutine(CRT_AnimTexture());
+
                 interactable = false;
                 started = true;
                 cooked = false;
@@ -111,6 +121,36 @@ public class Fournace : Machine
         {
             retrivedThisFrame = false;
         }
+    }
+
+    public IEnumerator CRT_AnimTexture()
+    {
+
+        render.material.SetVector("_Speed", Vector4.zero);
+
+        for (int i = 0; i < 6; i++)
+        {
+            render.material.SetVector("_Offset", new Vector4(i,0,0,0));
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        render.material.SetVector("_Offset", new Vector4(0, 2, 0, 0));
+        render.material.SetVector("_Speed", new Vector4 (1 ,0, 0, 0));
+
+        while (started || cooked)
+        {
+            yield return null;
+        }
+
+
+        render.material.SetVector("_Speed", Vector4.zero);
+        for (int i = 0; i < 6; i++)
+        {
+            render.material.SetVector("_Offset", new Vector4(i, 1, 0, 0));
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        render.material.SetVector("_Offset", new Vector4(0, 0, 0, 0));
     }
 
     public override InteractableObject OnExit()
