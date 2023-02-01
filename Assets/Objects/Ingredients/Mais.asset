@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7993c19651553f4408fe4c4612fb37ba, type: 3}
-  m_Name: "Ma\xEFs"
+  m_Name: Mais
   m_EditorClassIdentifier: 
   ingredient: 7
   prix: 5
