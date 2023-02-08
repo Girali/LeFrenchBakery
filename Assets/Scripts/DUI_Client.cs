@@ -12,6 +12,11 @@ public class DUI_Client : MonoBehaviour
     [SerializeField]
     private Gradient g;
 
+    [SerializeField]
+    private GameObject happy;
+    [SerializeField]
+    private GameObject sad;
+
     public void ShowIcon(bool b, Article a)
     {
         gameObject.SetActive(b);
@@ -22,5 +27,22 @@ public class DUI_Client : MonoBehaviour
     {
         fill.fillAmount = f;
         fill.color = g.Evaluate(f);
+    }
+
+    public void OnSuccess()
+    {
+        happy.SetActive(true);
+    }
+
+    IEnumerator CRT_Disable()
+    {
+        yield return new WaitForSeconds(4f);
+        happy.SetActive(false);
+        sad.SetActive(false);
+    }
+
+    public void OnFail()
+    {
+        sad.SetActive(true);
     }
 }

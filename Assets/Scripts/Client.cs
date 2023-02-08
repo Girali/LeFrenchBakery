@@ -91,6 +91,8 @@ public class Client : Interactable
 
         SoundController.Instance.Sell();
 
+        ui.OnSuccess();
+
         if (onSuccess != null)
             onSuccess(this);
     }
@@ -130,6 +132,8 @@ public class Client : Interactable
         interactable = false;
 
         animator.SetBool("Wait", false);
+
+        ui.OnFail();
 
         if (onFail != null)
             onFail(this);
@@ -202,6 +206,8 @@ public class Client : Interactable
                         interactable = false;
 
                         animator.SetBool("Wait", false);
+
+                        ui.OnFail();
 
                         if (onFail != null)
                             onFail(this);
