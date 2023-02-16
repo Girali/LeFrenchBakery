@@ -95,6 +95,15 @@ public class Fournace : Machine
 
     public override void OnEnter(InteractableObject r, GameObject p)
     {
+        if (cooked)
+        {
+            user = p.GetComponent<PlayerController>();
+            user.GetComponent<PlayerObjectController>().UnPauseInteractableObject(interactableObject);
+            ((RecipeObject)interactableObject).UpdateStep(this);
+            OnExit();
+            retrivedThisFrame = true;
+        }
+
         if (!retrivedThisFrame)
         {
             base.OnEnter(r, p);
@@ -162,25 +171,5 @@ public class Fournace : Machine
         smoke.Stop(true);
         Destroy(timer.gameObject);
         return base.OnExit();
-    }
-
-    public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
-    {
-        base.Interact(leftClick, leftClickDown, rightClickDown);
-    }
-
-    public override Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)
-    {
-        base.InteractFirst(leftClick, leftClickDown, rightClickDown);
-
-        if(cooked)
-        {
-            user.GetComponent<PlayerObjectController>().UnPauseInteractableObject(interactableObject);
-            ((RecipeObject)interactableObject).UpdateStep(this);
-            OnExit();
-            retrivedThisFrame = true;
-        }
-
-        return this;
     }
 }

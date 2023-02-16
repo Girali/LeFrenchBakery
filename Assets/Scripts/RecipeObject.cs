@@ -35,7 +35,6 @@ public class RecipeObject : InteractableObject
         stepCount = recipe.steps.Length - 1;
 
         SuccessCheck();
-        UpdateView();
     }
 
     public void SuccessCheck()
@@ -98,6 +97,6 @@ public class RecipeObject : InteractableObject
         else
             render.color = colorOverReciepe.Evaluate(currentStep / (float)stepCount);
 
-        GUI_Controller.Insatance.recipeFollower.UpdateView(this);
+        recipeFollower.UpdateView(this);
     }
 }

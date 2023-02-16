@@ -8,6 +8,8 @@ public class RecipeController : MonoBehaviour
     private GameObject reciepPrefab;
     private List<RecipeObject> recipeObjects;
 
+    
+
     private void Start()
     {
         recipeObjects = new List<RecipeObject>();

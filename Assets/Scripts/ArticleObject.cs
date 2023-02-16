@@ -16,7 +16,6 @@ public class ArticleObject : InteractableObject
         base.Init(o);
         article = (Article)o;
         icon.sprite = article.sprite;
-        UpdateView();
     }
 
     public override void Hold(GameObject g)
@@ -27,6 +26,6 @@ public class ArticleObject : InteractableObject
 
     public void UpdateView()
     {
-        GUI_Controller.Insatance.recipeFollower.UpdateView(this);
+        recipeFollower.UpdateView(this);
     }
 }

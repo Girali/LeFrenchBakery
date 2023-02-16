@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CookBook : Machine
 {
@@ -10,10 +8,18 @@ public class CookBook : Machine
     private RecipeController recipeController;
 
     [SerializeField]
-    private GameObject ui;
+    private DUI_Recipe reciepe;
+    private int currentRecipe = 0;
+
+    [SerializeField]
+    private Article[] articles;
+    private bool firstFrame = false;
 
     public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
     {
+        if (inUse)
+            return false;
+        
         if (poc.InteractableObject != null)
         {
             return false;
@@ -26,19 +32,63 @@ public class CookBook : Machine
     {
         base.OnEnter(r,p);
         user.StartStopMove(false, this);
-        ui.SetActive(true);
-        AppController.Instance.Pausable = false;
+        reciepe.gameObject.SetActive(true);
+        reciepe.UpdateView(articles[currentRecipe]);
+        inUse = true;
+    }
+
+
+    public override Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)
+    {
+        firstFrame = true;
+        return base.InteractFirst(leftClick, leftClickDown, rightClickDown);
+    }
+
+    public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown, bool escape, bool left, bool right)
+    {
+        base.Interact(leftClick, leftClickDown, rightClickDown, escape, left, right);
+        if (firstFrame)
+        {
+            firstFrame = false;
+        }
+        else
+        {
+            if (rightClickDown)
+                Quit();
+
+            if (left)
+            {
+                reciepe.Prev();
+                currentRecipe--;
+                currentRecipe = Mathf.Clamp(currentRecipe,0 , articles.Length - 1);
+                reciepe.UpdateView(articles[currentRecipe]);
+            }
+
+            if (right)
+            {
+                reciepe.Next();
+                currentRecipe++;
+                currentRecipe = Mathf.Clamp(currentRecipe,0 , articles.Length - 1);
+                reciepe.UpdateView(articles[currentRecipe]);
+            }
+
+            if (leftClickDown)
+            {
+                reciepe.Buy();
+            }
+        }
     }
 
     public void Quit()
     {
+        SoundController.Instance.CloseUI();
+        reciepe.gameObject.SetActive(false);
         OnExit();
     }
 
     public override InteractableObject OnExit()
     {
-        AppController.Instance.Pausable = true;
-        ui.SetActive(false);
+        inUse = false;
         user.StartStopMove(true, this);
         return base.OnExit();
     }

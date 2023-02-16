@@ -93,6 +93,8 @@ public class Client : Interactable
 
         ui.OnSuccess();
 
+        MagasinController.Instance.AddHappyClient();
+
         if (onSuccess != null)
             onSuccess(this);
     }
@@ -134,6 +136,8 @@ public class Client : Interactable
         animator.SetBool("Wait", false);
 
         ui.OnFail();
+        
+        MagasinController.Instance.AddSadClient();
 
         if (onFail != null)
             onFail(this);
@@ -208,6 +212,8 @@ public class Client : Interactable
                         animator.SetBool("Wait", false);
 
                         ui.OnFail();
+                        
+                        MagasinController.Instance.AddSadClient();
 
                         if (onFail != null)
                             onFail(this);

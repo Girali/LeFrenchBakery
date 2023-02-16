@@ -22,7 +22,11 @@ public class AppController : MonoBehaviour
 
     [SerializeField]
     private string mainScene;
+    [SerializeField]
+    private string multiScene;
 
+    private bool loadMulti = false;
+    
     [SerializeField]
     private AudioMixer audioMixer;
 
@@ -125,6 +129,11 @@ public class AppController : MonoBehaviour
         }
     }
 
+    public void ResetGame()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     public void LoadGame()
     {
         fadeMenu.SetActive(true);
@@ -132,12 +141,23 @@ public class AppController : MonoBehaviour
         SoundController.Instance.EnterBackery();
     }
 
-    public void EnterBakery()
+    public void LoadGameMulti()
     {
-        SceneManager.LoadScene(mainScene);
-        pausable = true;
+        fadeMenu.SetActive(true);
+        fadeMenu.GetComponent<Jun_TweenRuntime>().Play();
+        SoundController.Instance.EnterBackery();
+        loadMulti = true;
     }
 
+    public void EnterBakery()
+    {
+        if(loadMulti)
+            SceneManager.LoadScene(multiScene);
+        else
+            SceneManager.LoadScene(mainScene);
+        pausable = true;
+    }
+    
     public void QuitApp()
     {
         Application.Quit();

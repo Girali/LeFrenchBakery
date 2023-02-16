@@ -132,6 +132,7 @@ public class SoundController : MonoBehaviour
         AudioSource audioSource = sourceUI.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = uiGroup;
         uiAudioSources.Add(audioSource);
+        audioSource.volume = 1f;
         return audioSource;
     }
     private AudioSource FindFreeEffectSource()
@@ -167,6 +168,7 @@ public class SoundController : MonoBehaviour
     {
         AudioSource audioSource = FindFreeUISource();
         audioSource.pitch = Random.Range(0.9f, 1.0f);
+        audioSource.volume = 0.3f;
         audioSource.PlayOneShot(hover);
     }
 

@@ -17,7 +17,7 @@ public class FournisseurController : MonoBehaviour
         for (int i = 0; i < stockItems.Count; i++)
         {
             StockItem stockItem = stockItems[i];
-            if (stockItem.ingredient.ingredient==item.ingredient)
+            if (stockItem.ingredient.ingredient == item.ingredient)
             {
                 SoundController.Instance.BuyItem();
                 stockItem.count--;

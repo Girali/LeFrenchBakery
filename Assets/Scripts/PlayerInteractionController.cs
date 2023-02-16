@@ -10,11 +10,13 @@ public class PlayerInteractionController : MonoBehaviour
     private bool interacting = false;
     private Machine machineInUse;
     private PlayerObjectController playerObjectController;
+    private PlayerController playerController;
 
     public bool Interacting { get => interacting; }
 
     private void Start()
     {
+        playerController = GetComponent<PlayerController>();
         playerObjectController = GetComponent<PlayerObjectController>();
     }
 
@@ -32,7 +34,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    public void Interact(bool interactLeft, bool interactDownLeft, bool interactDownRight, GameObject hit)
+    public void Interact(bool interactLeft, bool interactDownLeft, bool interactDownRight, GameObject hit, bool escape, bool left, bool right)
     {
 
         if (interacting == false)
@@ -46,27 +48,49 @@ public class PlayerInteractionController : MonoBehaviour
                     Vector3 v = hit.transform.position - transform.position;
                     v.y = 0;
                     float dist = v.magnitude;
-
+                    
                     if (currentInteractable == null && dist < minDistance)// current is null and in range
                     {
                         currentInteractable = i;
-                        if(currentInteractable.GetComponent<InteractableObject>() != null)
-                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true, Vector3.down);
+                        
+                        InteractableObject io = currentInteractable.GetComponent<InteractableObject>();
+                        if (io != null)
+                        {
+                            RecipeObject ro = currentInteractable.GetComponent<RecipeObject>();
+                            
+                            if (ro != null)
+                                DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, currentInteractable.transform, true, "Interact", ro.Recipe.result.sprite, Vector3.down);
+                            else
+                                DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, currentInteractable.transform, true, "Interact", Vector3.down);
+                        }
                         else
-                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
+                        {
+                            DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, currentInteractable.transform, true, "Interact");
+                        }
                     }
                     else if (currentInteractable != i && dist < minDistance)// current is not current and in range
                     {
                         currentInteractable = i;
-                        if (currentInteractable.GetComponent<InteractableObject>() != null)
-                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true, Vector3.down);
+                        
+                        InteractableObject io = currentInteractable.GetComponent<InteractableObject>();
+                        if (io != null)
+                        {
+                            RecipeObject ro = currentInteractable.GetComponent<RecipeObject>();
+
+                            if (ro != null)
+                                DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, currentInteractable.transform, true, "Interact", ro.Recipe.result.sprite, Vector3.down);
+                            else
+                                DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, currentInteractable.transform, true, "Interact", Vector3.down);
+                        }
                         else
-                            DGUI_Controller.Insatance.ShowInidicator(currentInteractable.transform, true);
+                        {
+                            DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, currentInteractable.transform, true, "Interact");
+                        }
                     }
                     else if (currentInteractable != i && dist > minDistance)// current is ok and out range
                     {
                         currentInteractable = null;
-                        DGUI_Controller.Insatance.ShowInidicator(null, false);
+                        DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, false);
                     }
                     else // current is ok and in range
                     {
@@ -110,7 +134,7 @@ public class PlayerInteractionController : MonoBehaviour
                             }
 
                             SoundController.Instance.Interact();
-                            DGUI_Controller.Insatance.ShowInidicator(null, false);
+                            DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, false);
                         }
                     }
                 }
@@ -119,7 +143,7 @@ public class PlayerInteractionController : MonoBehaviour
                     if (currentInteractable != null)//current is ok
                     {
                         currentInteractable = null;
-                        DGUI_Controller.Insatance.ShowInidicator(null, false);
+                        DGUI_Controller.Insatance.ShowInidicator(playerController.CurrentPlayer, false);
                     }
                     else// current is null
                     {
@@ -136,8 +160,7 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (interacting && currentInteractable != null)
         {
-            currentInteractable.Interact(interactLeft, interactDownLeft, interactDownRight);
+            currentInteractable.Interact(interactLeft, interactDownLeft, interactDownRight,escape,left,right);
         }
-
     }
 }

@@ -17,9 +17,7 @@ public class GUI_Controller : MonoBehaviour
             return _instance;
         }
     }
-
-    public UI_RecipeFollower recipeFollower;
-
+    
     [SerializeField]
     private Jun_TweenRuntime notifyAnim;
     [SerializeField]
@@ -27,6 +25,8 @@ public class GUI_Controller : MonoBehaviour
 
     [SerializeField]
     private UI_Pause pause;
+
+    public UI_DaySummery daySummery;
 
     public void ShowPause(bool b)
     {

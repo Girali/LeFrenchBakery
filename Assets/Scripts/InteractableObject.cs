@@ -7,15 +7,11 @@ public class InteractableObject : Interactable
     [HideInInspector]
     public Rigidbody rb;
     protected GameObject holder;
+    protected DUI_ReciepeFollower recipeFollower;
 
     public virtual void Init(Object o)
     {
         rb = GetComponent<Rigidbody>();
-    }
-
-    public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
-    {
-        base.Interact(leftClick, leftClickDown, rightClickDown);
     }
 
     public override Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)
@@ -36,6 +32,7 @@ public class InteractableObject : Interactable
     public virtual void Hold(GameObject g)
     {
         holder = g;
+        recipeFollower = holder.GetComponent<DUI_ReciepeFollower>();
     }
 
     public GameObject Release()

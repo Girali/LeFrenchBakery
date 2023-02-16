@@ -10,6 +10,7 @@ public class Machine : Interactable
     private Type type;
     protected PlayerController user = null;
     protected InteractableObject interactableObject;
+    protected bool inUse = false;
 
     public Type GetMachineType { get => type; }
 

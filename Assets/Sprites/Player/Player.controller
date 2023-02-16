@@ -144,25 +144,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Y
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Wait
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PickUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -209,7 +209,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Walk
-  m_Speed: 1
+  m_Speed: 1.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6767377586761014943}
@@ -312,7 +312,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 79efaae9e82b04749ac46c60947b9122, type: 2}
     m_Threshold: 0
     m_Position: {x: 1, y: 0}
-    m_TimeScale: 1.8
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: X
     m_Mirror: 0
@@ -320,7 +320,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 7bbaa99563bd1614493f1d4bd07727b2, type: 2}
     m_Threshold: 0.33333334
     m_Position: {x: -1, y: 0}
-    m_TimeScale: 1.8
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: X
     m_Mirror: 0
@@ -328,7 +328,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: f3b824764ba0637478511a8f51295683, type: 2}
     m_Threshold: 0.6666667
     m_Position: {x: 0, y: 1}
-    m_TimeScale: 1.8
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: X
     m_Mirror: 0
@@ -336,7 +336,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 48543f52284d68a4fb83ffd65d369629, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: -1}
-    m_TimeScale: 1.8
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: X
     m_Mirror: 0

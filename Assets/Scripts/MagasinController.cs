@@ -42,9 +42,15 @@ public class MagasinController : MonoBehaviour
     public UnityAction onIngredentStockChange;
 
     [SerializeField]
-    private float money = 35;
+    private float money = 0;
     [SerializeField]
     private int day = 1;
+
+    private float gains = 0;
+    private float loses = 0;
+
+    private int happy = 0;
+    private int sad = 0;
 
     public void StartDay()
     {
@@ -54,18 +60,14 @@ public class MagasinController : MonoBehaviour
 
     public void NextDay()
     {
-        day++;
-        clientController.UpdateClientFrequency(day);
-        fournisseurController.ResetStock();
-        lightingManager.ResetDay();
-        blackFadeIn.gameObject.SetActive(false);
-        SaveGame();
+        GUI_Controller.Insatance.daySummery.Show(true);
+        GUI_Controller.Insatance.daySummery.Init(day, gains, loses, happy, sad);
     }
 
     public void EndDay()
     {
-        blackFadeIn.gameObject.SetActive(true);
         blackFadeIn.Play();
+        AppController.Instance.Pausable = false;
     }
 
     public void LoadGame()
@@ -191,8 +193,12 @@ public class MagasinController : MonoBehaviour
         }
     }
 
+    public int Day { get => day; set => day = value; }
+
     public void AddMoney(float f)
     {
+        gains += f;
+        
         if(f >= 0)
             money += f;
         if(onMoneyChange != null)
@@ -201,10 +207,22 @@ public class MagasinController : MonoBehaviour
 
     public void SubMoney(float f)
     {
+        loses += f;
+        
         if (f >= 0)
             money -= f;
         if(onMoneyChange != null)
             onMoneyChange();
+    }
+
+    public void AddHappyClient()
+    {
+        happy++;
+    }
+
+    public void AddSadClient()
+    {
+        sad++;
     }
 
     public IngredientStock FindStockByIngredent(Ingredient ing)

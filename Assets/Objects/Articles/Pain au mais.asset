@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97c2d73226ab7f64dac078d1100c88df, type: 3}
-  m_Name: "Pain au ma\xEFs"
+  m_Name: Pain au mais
   m_EditorClassIdentifier: 
   prix: 10
   peremption: 0

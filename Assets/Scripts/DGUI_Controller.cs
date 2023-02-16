@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DGUI_Controller : MonoBehaviour
 {
@@ -17,44 +19,56 @@ public class DGUI_Controller : MonoBehaviour
         }
     }
 
-    public GameObject interactIndicator;
+    public DUI_InteractIndicator interactIndicator1;
+    public DUI_InteractIndicator interactIndicator2;
+    public Transform timerParent;
+
+    public void ShowInidicator(PlayerController.PlayerIndex p, Transform pos, bool b, string t, Sprite s, Vector3 offset = new Vector3())
+    {
+        if (p == PlayerController.PlayerIndex.P1)
+            interactIndicator1.ShowInidicator(pos, b, t, s, offset);
+        else
+            interactIndicator2.ShowInidicator(pos, b, t, s, offset);
+    }
+
+    public void ShowInidicator(PlayerController.PlayerIndex p, Transform pos, bool b, string t, Vector3 offset = new Vector3())
+    {
+        if (p == PlayerController.PlayerIndex.P1)
+            interactIndicator1.ShowInidicator(pos, b, t, offset);
+        else
+            interactIndicator2.ShowInidicator(pos, b, t, offset);
+    }
+    
+    public void ShowInidicator(PlayerController.PlayerIndex p, bool b)
+    {
+        if (p == PlayerController.PlayerIndex.P1)
+            interactIndicator1.ShowInidicator(b);
+        else                                        
+            interactIndicator2.ShowInidicator(b);
+    }
+
+
     public GameObject interactTimer;
-
-    private Transform toFollowObject = null;
-    private Vector3 offsetToFollow = Vector3.zero;
-
-    private void Update()
-    {
-        if(toFollowObject != null) 
-        {
-            interactIndicator.transform.position = toFollowObject.transform.position + offsetToFollow;
-        }
-    }
-
-    public void ShowInidicator(Transform pos, bool b, Vector3 offset = new Vector3())
-    {
-        interactIndicator.SetActive(b);
-
-        if (pos != null) 
-        {
-            Collider c = pos.GetComponent<Collider>();
-            Vector3 p = c.bounds.center + Vector3.up;
-
-            offsetToFollow = (p - pos.position) + offset;
-            toFollowObject = pos;
-
-            interactIndicator.transform.position = pos.position + offsetToFollow;
-        }
-    }
+    public GameObject interactMixer;
 
     public DUI_Timer StartTimer(Transform pos, float cookingTime, float overcookingTime)
     {
         Collider c = pos.GetComponent<Collider>();
         Vector3 p = c.bounds.center + Vector3.up;
-        DUI_Timer t = Instantiate(interactTimer, transform).GetComponent<DUI_Timer>();
+        DUI_Timer t = Instantiate(interactTimer, timerParent).GetComponent<DUI_Timer>();
         t.gameObject.SetActive(true);
         t.transform.position = p;
         t.StartTimer(cookingTime, overcookingTime);
+        return t;
+    }
+
+    public DUI_Mixer StartMixer(Transform pos)
+    {
+        Collider c = pos.GetComponent<Collider>();
+        Vector3 p = c.bounds.center + Vector3.up;
+        DUI_Mixer t = Instantiate(interactMixer, transform).GetComponent<DUI_Mixer>();
+        t.gameObject.SetActive(true);
+        t.transform.position = p;
         return t;
     }
 }

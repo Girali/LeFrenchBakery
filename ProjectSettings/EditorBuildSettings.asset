@@ -10,5 +10,8 @@ EditorBuildSettings:
     guid: 8bfed6f7201f4dd4f9bec11703f436da
   - enabled: 1
     path: Assets/Scenes/Bakery.unity
+    guid: 73bd4c5161078bf468328413d07ab980
+  - enabled: 1
+    path: Assets/Scenes/Bakery_multi.unity
     guid: 1e8397929a18bc34ca27a715671c95c6
   m_configObjects: {}

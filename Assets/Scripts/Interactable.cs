@@ -11,7 +11,7 @@ public class Interactable : MonoBehaviour
         return this;
     }
 
-    public virtual void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
+    public virtual void Interact(bool leftClick, bool leftClickDown, bool rightClickDown, bool escape, bool left, bool right)
     {
 
     }

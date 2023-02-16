@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mixer : Machine
 {
-    public UI_Mixer mixer;
+    private DUI_Mixer mixer;
 
     [SerializeField]
     private float miniGameProgress = 0;
@@ -15,11 +15,13 @@ public class Mixer : Machine
     [SerializeField]
     private float miniGameGoal = 0;
 
-    private bool isLeft = false;
     private bool success = false;
 
     public override bool CanInteract(PlayerInteractionController pic, PlayerObjectController poc)
     {
+        if (inUse)
+            return false;
+
         if (poc.InteractableObject == null)
         {
             return false;
@@ -38,33 +40,21 @@ public class Mixer : Machine
         }
     }
 
-    private void OnEnable()
+    public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown, bool escape, bool left, bool right)
     {
-        mixer.finished += Finished;
-    }
+        base.Interact(leftClick, leftClickDown, rightClickDown, escape, left, right);
 
-    private void OnDisable()
-    {
-        mixer.finished -= Finished;
-    }
+        if (rightClickDown)
+            Quit();
 
-    public override void Interact(bool leftClick, bool leftClickDown, bool rightClickDown)
-    {
-        base.Interact(leftClick, leftClickDown, rightClickDown);
 
         if (!success)
         {
-            if (isLeft && leftClickDown)
+            if (leftClickDown)
             {
                 miniGameProgress += (Time.deltaTime * progressAmount);
-                isLeft = false;
                 SoundController.Instance.Mix();
-            }
-            else if (!isLeft && rightClickDown)
-            {
-                miniGameProgress += (Time.deltaTime * progressAmount);
-                isLeft = true;
-                SoundController.Instance.Mix();
+                mixer.Click();
             }
 
             miniGameProgress -= (Time.deltaTime * reprogressAmount);
@@ -76,12 +66,20 @@ public class Mixer : Machine
                 success = true;
             }
         }
-        mixer.UpdateView(miniGameProgress / miniGameGoal, isLeft);
+        mixer.UpdateView(miniGameProgress / miniGameGoal);
+    }
+
+    public void Quit()
+    {
+        mixer.finished -= Finished;
+        Destroy(mixer.gameObject);
+        OnExit();
     }
 
     public override InteractableObject OnExit()
     {
         user.StartStopMove(true, this);
+        inUse = false;
         return base.OnExit();
     }
 
@@ -89,11 +87,13 @@ public class Mixer : Machine
     {
         base.OnEnter(r, p);
         user.StartStopMove(false, this);
+        inUse = true;
     }
 
     public void Finished()
     {
-        mixer.Show(false);
+        mixer.finished -= Finished;
+        Destroy(mixer.gameObject);
         ((RecipeObject)interactableObject).UpdateStep(this);
         OnExit();
     }
@@ -101,7 +101,8 @@ public class Mixer : Machine
     public override Interactable InteractFirst(bool leftClick, bool leftClickDown, bool rightClickDown)
     {
         base.InteractFirst(leftClick, leftClickDown, rightClickDown);
-        mixer.Show(true);
+        mixer = DGUI_Controller.Insatance.StartMixer(transform);
+        mixer.finished += Finished;
         miniGameProgress = 0;
         success = false;
         return (Interactable)this;

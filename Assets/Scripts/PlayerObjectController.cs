@@ -7,7 +7,8 @@ public class PlayerObjectController : MonoBehaviour
 {
     private PlayerInteractionController playerInteractionController;
     private InteractableObject interactableObject;
-
+    private DUI_ReciepeFollower recipeFollower;
+    
     [SerializeField]
     private Transform position;
 
@@ -15,6 +16,7 @@ public class PlayerObjectController : MonoBehaviour
 
     private void Start()
     {
+        recipeFollower = GetComponent<DUI_ReciepeFollower>();
         playerInteractionController = GetComponent<PlayerInteractionController>();
     }
 
@@ -36,7 +38,7 @@ public class PlayerObjectController : MonoBehaviour
         Destroy(interactableObject.rb);
         interactableObject.transform.parent = position;
         interactableObject.transform.localPosition = Vector3.zero;
-        GUI_Controller.Insatance.recipeFollower.Show(true);
+        recipeFollower.Show(true);
     }
 
     public void PauseInteractableObject()
@@ -47,7 +49,7 @@ public class PlayerObjectController : MonoBehaviour
             interactableObject.transform.position = transform.position + new Vector3(0, 100, 0);
             interactableObject.Release();
             interactableObject = null;
-            GUI_Controller.Insatance.recipeFollower.Show(false);
+            recipeFollower.Show(false);
         }
     }
 
@@ -57,7 +59,7 @@ public class PlayerObjectController : MonoBehaviour
         interactableObject.Hold(gameObject);
         interactableObject.transform.parent = position;
         interactableObject.transform.localPosition = Vector3.zero;
-        GUI_Controller.Insatance.recipeFollower.Show(true);
+        recipeFollower.Show(true);
     }
 
     public void DropInteractableObject()
@@ -70,7 +72,7 @@ public class PlayerObjectController : MonoBehaviour
             interactableObject.Drop(gameObject);
             interactableObject.Release();
             interactableObject = null;
-            GUI_Controller.Insatance.recipeFollower.Show(false);
+            recipeFollower.Show(false);
         }
     }
 
@@ -79,7 +81,7 @@ public class PlayerObjectController : MonoBehaviour
         if (interactableObject != null)
         {
             interactableObject.transform.parent = null;
-            GUI_Controller.Insatance.recipeFollower.Show(false);
+            recipeFollower.Show(false);
             Destroy(interactableObject.gameObject);
             GameObject h = interactableObject.Release();
             interactableObject = null;
